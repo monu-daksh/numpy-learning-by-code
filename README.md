@@ -302,3 +302,128 @@ If this repository helps you:
 - Practice consistently
 
 Happy NumPy Learning 🚀
+
+📌 1. NumPy Basics & Setup
+```python
+# Requirements (Before You Start)
+🔹 Step 0: Prerequisites
+
+=> You should already know:
+=> Basic Python syntax
+=> What are variables
+=> What is a list
+=> How to run a Python file or use terminal / VS Code / Jupyter
+
+If you know how to write:
+a = [1, 2, 3]
+print(a)
+
+You’re good to go 👍
+
+🔹 Step 1: What is NumPy?
+Requirement:
+Basic understanding of Python data structures
+
+What is NumPy?
+=> NumPy (Numerical Python) is a Python library used for:
+=> Fast numerical calculations
+=> Working with arrays and matrices
+=> Scientific computing
+=> Data analysis, AI, ML, and Deep Learning
+
+Why NumPy exists?
+Python lists are:
+=> Slow for large data
+=> Not optimized for math operations
+
+NumPy solves this by:
+=> Using C language internally
+=> Storing data in continuous memory
+=> Supporting vectorized operations
+
+🔹 Step 2: Why NumPy is Faster than Python Lists
+Requirement:
+=> Understanding of Python lists
+
+| Python List                 | NumPy Array                |
+| --------------------------- | -------------------------- |
+| Stores different data types | Stores same data type      |
+| Slow loops                  | Fast vectorized operations |
+| High memory usage           | Low memory usage           |
+| Python-level execution      | C-level execution          |
+
+Example (Conceptual):
+Python list addition:
+result = []
+for i in range(len(a)):
+    result.append(a[i] + b[i])
+
+
+NumPy:
+result = a + b
+
+Note: No loop, no complexity, super fast
+
+🔹 Step 3: Installing NumPy
+Requirement:
+=> Python installed on your system
+=> Internet connection
+
+# Step-by-step Installation
+# Step 3.1: Check Python version
+python --version
+or
+python3 --version
+Note: Python 3.7 or above recommended
+
+# Step 3.2: Install NumPy
+=> pip install numpy
+
+# Step 3.3: Verify installation
+python
+
+import numpy
+print(numpy.__version__)
+
+🔹 Step 4: Importing NumPy
+Requirement:
+
+=> NumPy installed successfully
+Standard Import (BEST PRACTICE)
+import numpy as np
+
+Why np?
+=> Community standard
+=> Short and readable
+=> Used in almost all projects
+
+❌ Avoid:
+=> import numpy
+
+✔ Prefer:
+=> import numpy as np
+
+
+🔹 Step 5: NumPy Naming Conventions
+# Requirement:
+=> Basic Python import knowledge
+
+Standard Conventions:
+| Item      | Convention |
+| --------- | ---------- |
+| Library   | `numpy`    |
+| Alias     | `np`       |
+| Array     | `arr`      |
+| Matrix    | `mat`      |
+| Shape     | `shape`    |
+| Data type | `dtype`    |
+
+
+Example:
+import numpy as np
+
+arr = np.array([1, 2, 3])
+print(arr)
+
+```
+
