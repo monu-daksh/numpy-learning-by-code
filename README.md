@@ -670,9 +670,207 @@ arr_as = np.asarray(arr)
 print(arr is arr_as)  # True (same memory)
 
 
+🔹 3. np.zeros() – Array Filled with Zeros
+Purpose:
+=> Create array with all values = 0
+
+# 1D Example:
+
+import numpy as np
+arr = np.zeros(5)
+print(arr)
+
+# 2D Example:
+
+import numpy as np
+arr = np.zeros((2, 3))
+print(arr)
+
+Use Case:
+=> Initializing weights
+=> Placeholder arrays
+
+🔹 4. np.ones() – Array Filled with Ones
+Purpose:
+=> Create array with all values = 1
+
+import numpy as np
+arr = np.ones((3, 4))
+print(arr)
+
+🔹 5. np.empty() – Create Array Without Initialization
+Purpose:
+=> Creates array but does NOT set values
+
+import numpy as np
+arr = np.empty((2, 3))
+print(arr)
+
+Important:
+=> Contains random garbage values
+=> Faster than zeros() and ones()
+# Note: Use only when you plan to fill it immediately.
 
 
+🔹 6. np.full() – Array with Custom Value
+Purpose:
+=> Fill array with a specific value
 
+import numpy as np
+arr = np.full((3, 3), 7)
+print(arr)
+
+🔹 7. np.arange() – Range of Values (Like range())
+Purpose:
+=> Create array with evenly spaced values
+
+import numpy as np
+arr = np.arange(0, 10)
+print(arr)
+
+# With Step:
+
+import numpy as np
+arr = np.arange(0, 10, 2)
+print(arr)
+
+# Note: Important:--> End value is excluded
+
+🔹 8. np.linspace() – Fixed Number of Values
+Purpose:
+=> Create N numbers between two values (inclusive)
+
+import numpy as np  
+# np.linspace() is used to create numbers evenly spaced between two values
+# Syntax: np.linspace(start, end, total_numbers)
+
+# Create 5 numbers between 0 and 10 (both 0 and 10 are included)
+arr = np.linspace(0, 10, 5)
+print(arr)
+
+
+# Difference from arange():
+| arange       | linspace     |
+| ------------ | ------------ |
+| Step-based   | Count-based  |
+| End excluded | End included |
+
+🔹 9. np.logspace() – Logarithmic Scale
+Purpose:
+=> Values spaced evenly on a log scale
+
+import numpy as np 
+# np.logspace() creates numbers that are evenly spaced on a LOG scale
+# Syntax: np.logspace(start_power, end_power, total_numbers)
+
+# Create 3 numbers between 10¹ and 10³ (on a logarithmic scale)
+arr = np.logspace(1, 3, 3)
+
+# Print the generated NumPy array
+print(arr)
+
+
+Explanation:
+=> 10¹ → 10² → 10³
+
+Use Case:
+=> Scientific calculations
+=> Machine learning scales
+
+🔹 10. np.eye() – Identity Matrix
+Purpose:
+=> Diagonal elements = 1
+=> Others = 0
+
+
+import numpy as np 
+# np.eye() creates an IDENTITY MATRIX
+# Identity matrix means:
+# - All diagonal values are 1
+# - All other values are 0
+
+# Create a 4 x 4 identity matrix
+arr = np.eye(4)
+
+# Create an identity-like matrix with 3 rows and 5 columns
+arr = np.eye(3, 5)
+
+
+# Print the identity matrix
+print(arr)
+
+
+🔹 11. np.identity() – Square Identity Matrix
+Purpose:
+=> Same as eye() but only square matrix
+
+import numpy as np 
+arr = np.identity(3)
+print(arr)
+
+np.identity(4)  # Only square matrix
+np.eye(4)       # Square or rectangular
+
+🔹 12. Creating Arrays from Python Lists & Tuples
+# 2D List:
+
+import numpy as np 
+lst = [
+    [1, 2, 3],
+    [4, 5, 6]
+]
+
+arr = np.array(lst)
+print(arr)
+
+# Tuple:
+
+import numpy as np 
+tup = (10, 20, 30)
+arr = np.array(tup)
+print(arr)
+
+🔹 13. Additional Important Creation Methods (Often Missed)
+
+=> # np.zeros_like()
+
+import numpy as np 
+# Base NumPy array (this will be used as a reference)
+base = np.array([1, 2, 3])
+
+# np.zeros_like() creates a new array
+# - Same shape as 'base'
+# - All values are set to 0
+arr = np.zeros_like(base)
+
+print(arr)  # Output: [0 0 0]
+
+=> # np.ones_like()
+
+# - All values are set to 1
+arr = np.ones_like(base)
+
+=> # np.full_like()
+
+arr = np.full_like(base, 9)
+print(arr)  # Output: [9 9 9]
+
+# Quick Summary Table
+
+| Method       | Purpose                |
+| ------------ | ---------------------- |
+| `array()`    | Create from list/tuple |
+| `asarray()`  | Convert without copy   |
+| `zeros()`    | All zeros              |
+| `ones()`     | All ones               |
+| `empty()`    | Uninitialized          |
+| `full()`     | Custom value           |
+| `arange()`   | Range with step        |
+| `linspace()` | Fixed count            |
+| `logspace()` | Log scale              |
+| `eye()`      | Identity matrix        |
+| `identity()` | Square identity        |
+| `*_like()`   | Copy shape             |
 
 ```
 
