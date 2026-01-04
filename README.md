@@ -302,3 +302,322 @@ If this repository helps you:
 - Practice consistently
 
 Happy NumPy Learning 🚀
+
+📌 1. NumPy Basics & Setup
+```python
+# Requirements (Before You Start)
+🔹 Step 0: Prerequisites
+
+=> You should already know:
+=> Basic Python syntax
+=> What are variables
+=> What is a list
+=> How to run a Python file or use terminal / VS Code / Jupyter
+
+If you know how to write:
+a = [1, 2, 3]
+print(a)
+
+You’re good to go 👍
+
+🔹 Step 1: What is NumPy?
+Requirement:
+Basic understanding of Python data structures
+
+What is NumPy?
+=> NumPy (Numerical Python) is a Python library used for:
+=> Fast numerical calculations
+=> Working with arrays and matrices
+=> Scientific computing
+=> Data analysis, AI, ML, and Deep Learning
+
+Why NumPy exists?
+Python lists are:
+=> Slow for large data
+=> Not optimized for math operations
+
+NumPy solves this by:
+=> Using C language internally
+=> Storing data in continuous memory
+=> Supporting vectorized operations
+
+🔹 Step 2: Why NumPy is Faster than Python Lists
+Requirement:
+=> Understanding of Python lists
+
+| Python List                 | NumPy Array                |
+| --------------------------- | -------------------------- |
+| Stores different data types | Stores same data type      |
+| Slow loops                  | Fast vectorized operations |
+| High memory usage           | Low memory usage           |
+| Python-level execution      | C-level execution          |
+
+Example (Conceptual):
+Python list addition:
+result = []
+for i in range(len(a)):
+    result.append(a[i] + b[i])
+
+
+NumPy:
+result = a + b
+
+Note: No loop, no complexity, super fast
+
+🔹 Step 3: Installing NumPy
+Requirement:
+=> Python installed on your system
+=> Internet connection
+
+# Step-by-step Installation
+# Step 3.1: Check Python version
+python --version
+or
+python3 --version
+Note: Python 3.7 or above recommended
+
+# Step 3.2: Install NumPy
+=> pip install numpy
+
+# Step 3.3: Verify installation
+python
+
+import numpy
+print(numpy.__version__)
+
+🔹 Step 4: Importing NumPy
+Requirement:
+
+=> NumPy installed successfully
+Standard Import (BEST PRACTICE)
+import numpy as np
+
+Why np?
+=> Community standard
+=> Short and readable
+=> Used in almost all projects
+
+❌ Avoid:
+=> import numpy
+
+✔ Prefer:
+=> import numpy as np
+
+
+🔹 Step 5: NumPy Naming Conventions
+# Requirement:
+=> Basic Python import knowledge
+
+Standard Conventions:
+| Item      | Convention |
+| --------- | ---------- |
+| Library   | `numpy`    |
+| Alias     | `np`       |
+| Array     | `arr`      |
+| Matrix    | `mat`      |
+| Shape     | `shape`    |
+| Data type | `dtype`    |
+
+
+Example:
+import numpy as np
+
+arr = np.array([1, 2, 3])
+print(arr)
+
+```
+📌 2. NumPy Arrays Fundamentals (Deep & Simple Guide)
+```python
+🔹 Step 1: Creating NumPy Arrays
+Requirement:
+=> Python list knowledge
+
+Main Method: np.array()
+This function converts Python lists (or tuples) into NumPy arrays.
+
+import numpy as np
+
+# Creating a NumPy array from a Python list
+arr = np.array([1, 2, 3, 4, 5])
+
+print(arr)
+print(type(arr))  # Shows that this is a NumPy ndarray
+
+
+What’s happening:
+=> np.array() takes a list
+=> Converts it into a NumPy ndarray
+=> All elements become the same data type
+
+🔹 Step 2: 1D Arrays (One-Dimensional)
+
+Requirement:
+=> Understanding of linear lists
+
+What is a 1D array?
+=> Looks like a normal list
+=> Has only one direction
+
+import numpy as np
+
+arr_1d = np.array([10, 20, 30, 40])
+
+print(arr_1d)
+print(arr_1d.ndim)   # Number of dimensions
+print(arr_1d.shape)  # Size of array  (column, row)
+
+🔹 Step 3: 2D Arrays (Matrices)
+Requirement:
+=> Nested lists concept
+
+What is a 2D array?
+=> Rows and columns
+=> Used in matrices, tables, images
+
+import numpy as np
+
+arr_2d = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+print(arr_2d.ndim)   # 2 dimensions
+print(arr_2d.shape)  # (rows, columns)
+
+🔹 Step 4: 3D & N-Dimensional Arrays
+Requirement:
+=> Understanding of nested structures
+
+What is a 3D array?
+=> Multiple 2D matrices stacked together
+=> Used in videos, deep learning, tensors
+
+import numpy as np
+arr_3d = np.array([
+    [[1, 2], [3, 4]],
+    [[5, 6], [7, 8]]
+])
+
+print(arr_3d)
+
+print(arr_3d.ndim)
+print(arr_3d.shape)
+
+🔹 Step 5: Array Shape & Structure
+Requirement:
+=> Understanding of rows and columns
+
+# shape
+=> # Tells how the data is structured
+
+import numpy as np
+arr = np.array([
+    [10, 20, 30],
+    [40, 50, 60]
+])
+
+print(arr.shape)  # (2, 3) => (2 rows, 3 columns)
+
+🔹 Step 6: ndim (Number of Dimensions)
+
+import numpy as np
+arr = np.array([1, 2, 3])
+print(arr.ndim)  # 1
+
+🔹 Step 7: size (Total Elements)
+
+import numpy as np
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+print(arr.size) # 6
+
+Explanation:
+=> Counts all elements
+=> Rows × Columns = Total
+
+🔹 Step 8: dtype (Data Type)
+Requirement:
+=> Basic data type knowledge
+
+import numpy as np
+arr = np.array([1, 2, 3])
+print(arr.dtype)   #int64   # (or int32 depending on system)
+
+# Mixed data example:
+import numpy as np
+arr = np.array([1, 2.5, 3])
+print(arr.dtype)  # float64
+
+Why?
+=> NumPy converts everything to one common type
+=> This makes operations fast
+
+🔹 Step 9: itemsize (Memory of One Element)
+Requirement:
+Understanding of bytes
+
+import numpy as np
+arr = np.array([1, 2, 3])
+print(arr.itemsize)   # 8
+
+Meaning:
+Each element uses 8 bytes in memory
+
+🔹 Step 10: nbytes (Total Memory Used)
+Requirement:
+=> size and itemsize knowledge
+
+import numpy as np
+arr = np.array([1, 2, 3, 4])
+print(arr.nbytes)   # 32
+
+note:
+How it’s calculated:
+nbytes = size × itemsize
+
+🔹 Step 11: All Properties Together (Real Example)
+import numpy as np
+
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+print("Dimensions:", arr.ndim)
+print("Shape:", arr.shape)
+print("Total elements:", arr.size)
+print("Data type:", arr.dtype)
+print("Bytes per element:", arr.itemsize)
+print("Total memory:", arr.nbytes)
+
+# Quick Reference Table
+
+| Property   | Meaning              |
+| ---------- | -------------------- |
+| `ndim`     | Number of dimensions |
+| `shape`    | Structure of array   |
+| `size`     | Total elements       |
+| `dtype`    | Data type            |
+| `itemsize` | Memory per element   |
+| `nbytes`   | Total memory used    |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
