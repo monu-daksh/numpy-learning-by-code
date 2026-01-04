@@ -603,16 +603,71 @@ print("Total memory:", arr.nbytes)
 | `itemsize` | Memory per element   |
 | `nbytes`   | Total memory used    |
 
+```
+📌 3. NumPy Array Creation Methods (Complete Guide)
+```python
+✅ Requirements
+# Before starting, you should know:
+How to import NumPy
 
+import numpy as np
+=> What is an ndarray
+=> Basic Python lists & tuples
 
+🔹 1. np.array() – Create Array from List or Tuple
 
+Purpose:
+Convert Python list or tuple into a NumPy array
 
+Example (List):
 
+import numpy as np
+arr = np.array([1, 2, 3, 4])
+print(arr)
+print(type(arr))  # Shows it's a NumPy array
 
+Example (Tuple):
 
+arr = np.array((10, 20, 30))
+print(arr)
 
+Important Points:
+=> Automatically detects data type
+=> Converts all elements to same type
 
+🔹 2. np.asarray() – Convert to Array (Without Copy)
+Purpose:
+=> Converts input to NumPy array
+=> Does NOT create a copy if already an array
 
+Example:
+
+import numpy as np
+lst = [1, 2, 3]
+
+# np.array() converts the Python list into a NEW NumPy array
+# It always creates a copy of the data
+arr1 = np.array(lst)
+
+# np.asarray() also converts the list into a NumPy array
+# But it avoids copying data if the input is already a NumPy array
+# (here input is a list, so it still creates a new array)
+arr2 = np.asarray(lst)
+
+print(arr1)
+print(arr2)
+
+Why important?
+=> Faster
+=> Memory efficient
+
+Check behavior:
+
+import numpy as np
+arr = np.array([1, 2, 3])
+arr_as = np.asarray(arr)
+
+print(arr is arr_as)  # True (same memory)
 
 
 
