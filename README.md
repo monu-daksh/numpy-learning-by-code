@@ -1129,4 +1129,165 @@ Quick Summary Table
 | `astype()`       | Type conversion  |
 | Structured dtype | Mixed data       |
 ```
+📌 5. Indexing & Slicing
+```python
+✅ Requirements
+Before starting, you should know:
+=> How to create NumPy arrays
+=> What is a 1D and 2D array
+=> Basic Python indexing (list[0])
+
+🔹 1. Basic Indexing (1D Array)
+Purpose:
+=> # Access a single element using its position
+
+import numpy as np
+arr = np.array([10, 20, 30, 40, 50])
+
+print(arr[0])   # First element
+print(arr[2])   # Third element
+print(arr[4])   # Fifth element
+
+# Important:
+=> # Indexing starts from 0
+
+🔹 2. Negative Indexing
+Purpose:
+=> Access elements from the end
+
+print(arr[-1])  # Last element
+print(arr[-2])  # Second last element
+
+Explanation:
+=> # -1 always means last element
+
+🔹 3. Slicing 1D Arrays
+Purpose:
+=> # Extract multiple values at once
+
+# Syntax:
+array[start : stop : step]
+
+
+print(arr[1:4])   # From index 1 to 3
+print(arr[:3])    # From start to index 2
+print(arr[2:])    # From index 2 to end
+
+Explanation:
+=> # Stop index is not included
+
+🔹 4. Step Slicing
+Purpose:
+=> # Skip elements
+
+import numpy as np 
+
+# Create a NumPy array
+arr = np.array([10, 20, 30, 40, 50, 60])
+
+# arr[start : stop : step]
+
+# Take every 2nd element starting from index 0
+
+Index:  0   1   2   3   4   5
+Value: 10  20  30  40  50  60
+Take:  ✔       ✔       ✔
+
+print(arr[::2])    # Output: [10 30 50]
+
+# Take every 2nd element starting from index 1
+
+Index:  0   1   2   3   4   5
+Value: 10  20  30  40  50  60
+Take:      ✔       ✔       ✔
+
+print(arr[1::2])   # Output: [20 40 60]
+
+
+🔹 5. Slicing 2D Arrays
+Requirement:
+=> # Understanding of rows and columns
+
+
+import numpy as np 
+arr_2d = np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+print(arr_2d)
+
+import numpy as np  # Import NumPy library
+
+# Create a 2D NumPy array (matrix)
+# Think of this like a table with rows and columns
+arr_2d = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+# Access element at row 0 and column 0
+# Row index = 0 (first row)
+# Column index = 0 (first column)
+print(arr_2d[0, 0])   # Output: 10
+
+# Access element at row 1 and column 2
+# Row index = 1 (second row)
+# Column index = 2 (third column)
+print(arr_2d[1, 2])   # Output: 60
+
+# How 2D indexing works (very simple)
+# Visual representation (easy to understand)
+
+        Col 0   Col 1   Col 2
+       ---------------------
+Row 0 |  10      20      30
+Row 1 |  40      50      60
+Row 2 |  70      80      90
+
+#  Example 1: arr_2d[0, 0]
+ => # Go to row 0 (first row)
+ => # Then go to column 0 (first column)
+
+# output: 10
+
+🔹 7. Row Selection
+
+import numpy as np  
+
+# Create a 2D array (think of it as a table)
+arr_2d = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+=> # Select a FULL row
+
+# Select the entire row at index 1 (second row)
+print(arr_2d[1])   # Output: [40 50 60]
+
+=> # Select MULTIPLE rows (row slicing)
+
+# Select rows from index 0 up to (but not including) index 2
+print(arr_2d[0:2])
+
+# Output of arr_2d[0:2]
+[[10 20 30]
+ [40 50 60]]
+
+# More simple examples
+arr_2d[:2]   # First two rows (row 0 and 1)
+arr_2d[1:]   # From row 1 till end
+arr_2d[-1]   # Last row
+
+
+
+
+
+
+
+```
 
