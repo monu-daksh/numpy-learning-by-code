@@ -873,4 +873,260 @@ print(arr)  # Output: [9 9 9]
 | `*_like()`   | Copy shape             |
 
 ```
+📌 4. Data Types (dtype) in NumPy
+```python
+✅ Requirements
+Before starting, you should know:
+=> How to create NumPy arrays
+=> What is an ndarray
+=> Basic Python data types (int, float, bool, str)
+
+🔹 1. What is dtype?
+Meaning:
+dtype (data type) tells:
+
+=> What kind of data is stored in the array
+=> How much memory each element uses
+=> How NumPy treats values during operations
+
+Example:
+
+import numpy as np
+arr = np.array([1, 2, 3])
+print(arr.dtype)  # Shows data type of array elements
+
+🔹 2. Integer Types in NumPy
+Purpose:
+=> Store whole numbers
+
+# Common Integer Types:
+
+| Type    | Description    |
+| ------- | -------------- |
+| `int8`  | 8-bit integer  |
+| `int16` | 16-bit integer |
+| `int32` | 32-bit integer |
+| `int64` | 64-bit integer |
+
+
+Example:
+import numpy as np
+
+# Create a NumPy array with explicit data type (int32)
+# dtype=np.int32 means:
+# - Each number is stored as a 32-bit integer
+# - Uses less memory than default int64 on most systems
+arr = np.array([10, 20, 30], dtype=np.int32)
+
+# Print the array values
+print(arr)   # Output: [10 20 30]
+
+# Print the data type of elements stored in the array
+print(arr.dtype)  # Output: int32
+
+# itemsize tells how much memory ONE element uses
+# The value is in bytes
+print(arr.itemsize)  # Output: 4
+
+
+# Memory comparison example
+np.array([1, 2, 3], dtype=np.int32).itemsize  # 4 bytes
+np.array([1, 2, 3], dtype=np.int64).itemsize  # 8 bytes
+
+# Note: 
+Explanation:
+
+=> Smaller integer → less memory
+=> Use wisely for large datasets
+
+🔹 3. Float Types in NumPy
+Purpose:
+=> Store decimal numbers
+
+Common Float Types:
+| Type      | Description              |
+| --------- | ------------------------ |
+| `float16` | Low precision            |
+| `float32` | Medium precision         |
+| `float64` | High precision (default) |
+
+
+Example:
+
+import numpy as np
+arr = np.array([1.5, 2.8, 3.1], dtype=np.float32)
+print(arr)
+print(arr.dtype)
+
+# Automatic Conversion:
+
+import numpy as np
+arr = np.array([1, 2.5, 3])
+print(arr.dtype)  # Converted to float automatically
+
+🔹 4. Boolean Type
+Purpose:
+=> Store True or False
+
+Example:
+
+import numpy as np
+arr = np.array([True, False, True])
+print(arr)
+print(arr.dtype)
+
+# Numeric Behavior:
+
+import numpy as np
+arr = np.array([True, False, True])
+print(arr + 1)
+
+# Note: Explanation:--->
+=> True = 1
+=> False = 0
+
+🔹 5. String Type
+Purpose:
+=> Store text data
+
+import numpy as np 
+
+# Create a NumPy array containing text (strings)
+arr = np.array(["apple", "banana", "mango"])
+
+# Print the array values
+print(arr)   # Output: ['apple' 'banana' 'mango']
+
+# Print the data type of the array elements
+print(arr.dtype)  # Output: <U6
+
+# Note:
+NumPy automatically:
+=> Checks all strings
+=> Picks the longest length
+=> Sets dtype to <U6
+
+🔹 6. Complex Numbers
+Purpose:
+=> Store numbers with real + imaginary parts
+
+Example:
+
+import numpy as np 
+arr = np.array([1+2j, 3+4j])
+print(arr)
+print(arr.dtype)
+
+# Note:
+=> # Access Parts:
+
+print(arr.real)  # real part
+print(arr.imag)  # imaginary part
+
+🔹 7. Type Conversion Using astype()
+Purpose:
+=> Convert array from one dtype to another
+
+Example:
+
+import numpy as np 
+arr = np.array([1.2, 2.5, 3.9])
+new_arr = arr.astype(int)
+
+print(new_arr)
+print(new_arr.dtype)
+
+# Note: Decimal part is removed, not rounded
+
+# String to Integer:
+
+import numpy as np 
+arr = np.array(["1", "2", "3"])
+new_arr = arr.astype(int)
+print(new_arr)
+
+
+🔹 8. Custom dtypes (Structured Arrays)
+Purpose:
+=> Store different data types in one array
+=> (Like a table or record)
+
+Example:
+
+import numpy as np 
+
+# Define a CUSTOM data type (structured dtype)
+# Each element will behave like a small record (row)
+dtype = [
+    ("name", "U10"),   # 'name' → text (Unicode), max 10 characters
+    ("age", "i4"),     # 'age' → integer, uses 4 bytes
+    ("salary", "f8")   # 'salary' → decimal number, uses 8 bytes
+]
+
+# Create a NumPy array using the custom structure
+# Each row must follow the order: (name, age, salary)
+arr = np.array(
+    [
+        ("Monu", 25, 50000.0),  # First person record
+        ("Amit", 30, 60000.0)   # Second person record
+    ],
+    dtype=dtype  # Tell NumPy to use the structured dtype
+)
+
+# Print the full structured array
+print(arr)
+
+# Print detailed information about the structure
+print(arr.dtype)
+
+# Easy way to access data
+print(arr["name"])    # ['Monu' 'Amit']
+print(arr["age"])     # [25 30]
+print(arr["salary"])  # [50000. 60000.]
+
+🔹 9. Type Casting Rules in NumPy
+=> # Rule 1: Safe Casting (Automatic)
+
+import numpy as np 
+arr = np.array([1, 2, 3.5])
+print(arr.dtype)  # int → float
+
+=> # Rule 2: Unsafe Casting (Manual)
+
+import numpy as np 
+arr = np.array([1.9, 2.1])
+print(arr.astype(int))  # data loss
+
+=> # Rule 3: Boolean Casting
+
+import numpy as np 
+arr = np.array([0, 1, 2, 3])
+print(arr.astype(bool))
+
+Explanation:
+=> 0 → False
+=> Non-zero → True
+
+🔹 10. Checking All dtype Information Together
+
+import numpy as np 
+arr = np.array([1, 2, 3], dtype=np.int16)
+
+print("Array:", arr)
+print("Data type:", arr.dtype)
+print("Bytes per element:", arr.itemsize)
+print("Total memory:", arr.nbytes)
+
+
+Quick Summary Table
+| Type             | Description      |
+| ---------------- | ---------------- |
+| `int`            | Whole numbers    |
+| `float`          | Decimal numbers  |
+| `bool`           | True/False       |
+| `str`            | Text             |
+| `complex`        | Real + Imaginary |
+| `astype()`       | Type conversion  |
+| Structured dtype | Mixed data       |
+```
 
