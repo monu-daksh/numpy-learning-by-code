@@ -1283,11 +1283,385 @@ arr_2d[:2]   # First two rows (row 0 and 1)
 arr_2d[1:]   # From row 1 till end
 arr_2d[-1]   # Last row
 
+🔹 8. Column Selection
+
+import numpy as np  
+
+# Create a 2D NumPy array (table)
+arr_2d = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+# Select a FULL column
+
+# Select ALL rows, but only column at index 1 (second column)
+print(arr_2d[:, 1])
+
+# What is happening (simple meaning)
+=> : → take all rows
+=> 1 → take column index 1
+=> Result → one full column
+
+# Output
+=> # [20 50 80]
+
+#  Select MULTIPLE columns
+
+# Select ALL rows, and columns from index 0 up to (but not including) 2
+print(arr_2d[:, 0:2])
+
+What is happening
+=> : → all rows
+=> 0:2 → column 0 and column 1
+=> Column 2 is NOT included
+
+Visual understanding
+
+            Col 0   Col 1   Col 2
+          -----------------------
+Row 0   →     ✔      ✔      ✖
+Row 1   →     ✔      ✔      ✖
+Row 2   →     ✔      ✔      ✖
+
+Easy memory trick
+=> : before comma → all rows
+=> : after comma → all columns
+
+# One-line rule to remember
+=> arr_2d[:, col] → one column
+=> arr_2d[:, start:end] → many columns
+
+# More simple examples
+arr_2d[:, -1]   # Last column
+arr_2d[:, :1]   # First column (keeps 2D shape)
+
+🔹 9. Slicing Rows and Columns Together
+
+import numpy as np
+
+# Create a 2D NumPy array (table)
+arr_2d = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+# Select:
+# Rows from index 0 up to (but not including) 2
+# Columns from index 1 up to (but not including) 3
+print(arr_2d[0:2, 1:3])
+
+=> # What is happening (very simple)
+General format:
+
+# arr_2d[row_start:row_end, col_start:col_end]
+
+=> First part → rows
+=> Second part → columns
+=> Start index → included
+=> End index → NOT included
+
+# Step-by-step breakdown
+
+0:2 → rows
+
+=> Row 0 → ✔ included
+=> Row 1 → ✔ included
+=> Row 2 → ❌ excluded
+
+1:3 → columns
+=> Column 1 → ✔ included
+=> Column 2 → ✔ included
+=> Column 3 → ❌ excluded (does not exist anyway)
 
 
+# Easy memory trick
+=> Before comma → rows
+=> After comma → columns
+
+#  One-line rule to remember
+
+=> arr_2d[a:b, c:d] → take rows a to b-1 and columns c to d-1
+=> arr_2d[1:3, 0:2]  # Rows 1–2, Columns 0–1
+=> arr_2d[:2, :2]    # Top-left corner
+=> arr_2d[:, 1:]     # All rows, columns from 1 to end
+
+# More simple examples
+arr_2d[1:3, 0:2]  # Rows 1–2, Columns 0–1
+arr_2d[:2, :2]    # Top-left corner
+arr_2d[:, 1:]     # All rows, columns from 1 to end
 
 
+🔹 10. Modifying Values Using Indexing
+
+=> # Modify a single value (1D array)
+
+import numpy as np 
+
+# Create a 1D NumPy array
+arr = np.array([10, 20, 30, 40, 50])
+
+# Change the value at index 0 (first element) to 100
+arr[0] = 100
+
+# Print the updated array
+print(arr)
+
+=> # Modify MULTIPLE values (slice assignment)
+
+# Replace values from index 1 up to (but not including) index 4 with 999
+arr[1:4] = 999
+
+# Print the updated array
+print(arr)
+
+What is happening
+=> # 1:4 → index 1, 2, 3
+=> # All selected elements get same new value
+=> # NumPy changes them in one operation
+
+=> # Modify values in a 2D array (rows & columns)
+
+import numpy as np 
+
+# Create a 2D NumPy array (table with rows & columns)
+arr_2d = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+# arr_2d[0, :] means:
+# 0  → select FIRST row (top row)
+# :  → select ALL columns in that row
+# = 0 → replace every selected value with 0
+arr_2d[0, :] = 0
+
+# Print updated array
+print(arr_2d)
+
+# Output
+
+[[ 0  0  0]
+ [40 50 60]
+ [70 80 90]]
+
+# What exactly happened (simple words)
+=> # NumPy selected the first row
+=> # It selected all columns inside that row
+=> # Then it replaced every value with 0
+
+# Visual understanding
+
+Before
+
+Row 0 → [10 20 30]
+Row 1 → [40 50 60]
+Row 2 → [70 80 90]
+
+After
+
+Row 0 → [ 0  0  0]
+Row 1 → [40 50 60]
+Row 2 → [70 80 90]
+
+# Easy rules to remember
+
+import numpy as np
+
+arr = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+# Visual view:
+
+            Col 0   Col 1   Col 2
+          -----------------------
+Row 0   →     10     20     30
+Row 1   →     40     50     60
+Row 2   →     70     80     90
+
+# Change ONE specific cell (row + column)
+
+arr[1, 2] = 999
+
+# Meaning:
+=> # Row 1 (second row)
+=> # Column 2 (third column)
+=> # Changes only 60 → 999
+
+# Change MANY cells in SAME ROW (some columns)
+
+arr[1, 0:2] = 0
+
+# Meaning:
+=> Row 1
+=> Columns 0 and 1
+=> [40 50] → [0 0]
+
+# Change FULL ROW
+
+arr[0, :] = 5
+
+# Meaning:
+=> # Row 0
+=> # All columns (:)
+=> # [10 20 30] → [5 5 5]
+
+# Change FULL COLUMN
+
+arr[:, 1] = 777
+
+# Meaning:
+=> # All rows (:)
+=> # Column 1
+[20 50 80] → [777 777 777]
 
 
+# Change MULTIPLE ROWS & MULTIPLE COLUMNS
+
+arr[0:2, 1:3] = 99
+
+Meaning:
+=># Rows 0 and 1
+=># Columns 1 and 2
+
+# Select (not change) specific data
+
+=> # Get one value
+value = arr[2, 0]   # Row 2, Col 0 → 70
+
+=> # Get one full row
+row = arr[1, :]
+
+=> # Get one full column
+
+col = arr[:, 2]
+
+# Mental shortcut (VERY IMPORTANT)
+arr[ ROWS , COLUMNS ]
+
+=> # Before comma → vertical movement (down)
+=> # After comma → horizontal movement (right)
+
+🔹 11. Boolean Indexing (IMPORTANT)
+Purpose:
+=> # Select elements based on condition
+
+arr = np.array([10, 20, 30, 40, 50])
+print(arr[arr > 25])  # Elements greater than 25
+
+=> # Modify using condition:
+
+arr[arr > 30] = 999  # All elements will be replace by 999
+print(arr)
+
+
+🔹 12. Fancy Indexing (Index with List)
+Purpose:
+=> # Select specific positions
+
+import numpy as np  # Import NumPy library
+
+# Create a NumPy array
+arr = np.array([10, 20, 30, 40, 50])
+
+# Use a LIST of indexes to pick specific positions
+# [0, 2, 4] means:
+# - pick index 0 → 10
+# - pick index 2 → 30
+# - pick index 4 → 50
+print(arr[[0, 2, 4]]) # [10 30 50]
+
+# What is happening (very simple)
+=> # Normal indexing → picks one position
+=> # Fancy indexing → picks many specific positions at once
+
+🔹 Fancy indexing in 2D (quick look)
+
+arr_2d = np.array([
+    [10, 20, 30],
+    [40, 50, 60],
+    [70, 80, 90]
+])
+
+# Pick specific rows
+print(arr_2d[[0, 2]])
+
+Output:
+
+[[10 20 30]
+ [70 80 90]]
+
+# Easy rule to remember
+=> # Fancy indexing = Indexing with a list or array
+
+🔹 13. Views vs Copies (VERY IMPORTANT)
+View (Changes affect original array)
+
+import numpy as np  # Import NumPy
+
+# Original NumPy array
+arr = np.array([1, 2, 3, 4, 5])
+
+# Take a slice from index 1 to 3 (NOT a new array, it's a VIEW)
+slice_arr = arr[1:4]
+
+# Change all values inside the slice
+slice_arr[:] = 99
+
+# Print original array
+print(arr)   # [ 1 99 99 99  5 ]
+
+# What is happening (very brief)
+=> # arr[1:4] → creates a VIEW
+=> # View = shares same memory
+=> # Changing slice → original array also changes
+
+# Visual idea
+
+arr = [1, 2, 3, 4, 5]
+          ↑  ↑  ↑
+        slice part
+
+# Output: arr = [1, 99, 99, 99, 5]
+
+# Copy (Changes do NOT affect original)
+
+arr = np.array([1, 2, 3, 4, 5])
+
+copy_arr = arr[1:4].copy()  # Explicit copy
+copy_arr[:] = 88
+
+print(arr)       # Original unchanged
+print(copy_arr)
+
+🔹 14. Checking If It’s a View or Copy
+
+print(slice_arr.base)  # If not None → it's a view
+print(copy_arr.base)   # None → it's a copy
+
+# Quick Cheat Sheet
+
+| Feature           | Example             |
+| ----------------- | ------------------- |
+| Basic indexing    | `arr[0]`            |
+| Negative indexing | `arr[-1]`           |
+| Slice             | `arr[1:4]`          |
+| Step              | `arr[::2]`          |
+| Row select        | `arr[1]`            |
+| Column select     | `arr[:, 1]`         |
+| Modify            | `arr[arr > 10] = 0` |
+| Copy              | `arr.copy()`        |
+
+
+```
+📌 6. Indexing & Slicing
+```python
+#
 ```
 
