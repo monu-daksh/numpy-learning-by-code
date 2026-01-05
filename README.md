@@ -2050,4 +2050,309 @@ Key difference (must remember)
 => # List ([]) = copy → safe
  
 ```
+📌 7. Shape Manipulation in NumPy
+```python
+✅ Requirements
+# Before starting, you should know:
+=> # What shape means
+=> # 1D, 2D arrays
+=> # Basic indexing
+
+🔹 1. reshape() – Change Shape Without Changing Data
+Purpose:
+=> # Change the shape of an array
+=> # Total number of elements must stay the same
+
+import numpy as np 
+
+# Create a 1D NumPy array with 6 elements
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+# Reshape the 1D array into:
+# 2 rows and 3 columns
+# NOTE: Total elements must stay the same (2 × 3 = 6)
+new_arr = arr.reshape(2, 3)
+
+# Print the reshaped array
+print(new_arr)
+
+# output:
+[[1 2 3]
+ [4 5 6]]
+
+🔹 Example 2: Using -1 (Auto calculate dimension)
+
+import numpy as np  
+
+# Create a 1D NumPy array
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+# Reshape with -1:
+# 3 rows given
+# -1 tells NumPy: "calculate columns automatically"
+new_arr = arr.reshape(3, -1)
+
+# Print the reshaped array
+print(new_arr)
+
+
+# output:
+[[1 2]
+ [3 4]
+ [5 6]]
+
+# What -1 means (very easy)
+=> # -1 = "You decide for me, NumPy"
+=> # NumPy looks at:
+     => # Total elements = 6
+     => # Rows = 3
+=> # So columns = 6 ÷ 3 = 2
+
+# Important rules to remember
+
+1. Total elements must match
+reshape(2, 4)  # ❌ Error (8 needed, only 6 exist)
+
+2. Only one -1 is allowed
+reshape(-1, -1)  # ❌ Not allowed
+
+3. reshape usually returns a VIEW
+  => # Changing reshaped array may change original
+
+# One-line memory trick
+reshape = same data, new shape
+
+🔹 3. flatten() – Convert to 1D (Copy)
+Purpose:
+=> # Convert any array into 1D
+=> # Always returns a copy
+
+
+import numpy as np  
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+flat = arr.flatten()
+print(flat)
+
+🔹 3. ravel() – Convert to 1D (View if Possible)
+Purpose:
+
+=> # Similar to flatten()
+=> # Returns a view when possible (memory efficient)
+
+import numpy as np
+
+# Create a 2D array
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# Convert 2D array into 1D (flatten-like)
+rav = arr.ravel()
+
+# Modify the first element of ravel array
+rav[0] = 99
+
+# Original array also changes (because ravel gives a VIEW)
+print(arr)
+
+# output
+[[99  2  3]
+ [ 4  5  6]]
+
+# Note: ravel() → view → changes original (if possible)
+
+🔹 4. transpose() – Swap Rows & Columns
+Purpose:
+=> # Converts rows into columns
+=> # Used in matrix math
+
+import numpy as np
+
+# Create a 2D array
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# Swap rows and columns
+trans = arr.transpose()
+print(trans)
+
+# Output:
+[[1 4]
+ [2 5]
+ [3 6]]
+
+# Shape change
+
+print(arr.shape)    # (2, 3) → 2 rows, 3 columns
+print(trans.shape)  # (3, 2) → 3 rows, 2 columns
+
+# Note: transpose = rows ↔ columns
+
+🔹 5. .T – Shortcut for Transpose
+
+# Same as arr.transpose()
+print(arr.T)
+
+🔹 6. swapaxes() – Swap Any Two Axes
+Purpose
+=> # Swap specific axes
+=> # Mostly used in 3D or higher arrays
+
+Swap specific axes (useful in 3D+ arrays)
+
+import numpy as np
+arr = np.array([
+    [[1, 2], [3, 4]],
+    [[5, 6], [7, 8]]
+])
+
+# Swap axis 0 and axis 1
+swapped = arr.swapaxes(0, 1)
+print(swapped)
+
+🔹 expand_dims() – Add a new dimension
+
+import numpy as np 
+
+# Create a 1D array (only one row of values)
+arr = np.array([1, 2, 3])
+
+# Add axis at position 0 (make it a ROW)
+
+# Add a new dimension at axis 0
+# axis=0 means: add a new outer level
+# This turns the 1D array into a single row
+new_arr = np.expand_dims(arr, axis=0)
+
+# Print the new array
+print(new_arr)
+
+# Print the shape (rows, columns)
+print(new_arr.shape)
+
+
+# Output
+[[1 2 3]]
+(1, 3)
+
+# Add axis at position 1 (make it a COLUMN)
+
+# Add a new dimension at axis 1
+# axis=1 means: add a new inner level
+# This turns each value into its own row (column shape)
+new_arr = np.expand_dims(arr, axis=1)
+
+# Print the new array
+print(new_arr)
+
+# Print the shape
+print(new_arr.shape)
+
+
+# Output
+[[1]
+ [2]
+ [3]]
+(3, 1)
+
+# Visual comparison
+
+Original
+[1  2  3]
+
+axis=0 (row)
+[[1  2  3]]
+
+axis=1 (column)
+[[1]
+ [2]
+ [3]]
+
+# Why this is useful (real reason)
+
+=> # Machine Learning models expect 2D or 3D data
+=> # expand_dims() helps match required shape
+
+No data is changed, only shape
+
+# Easy memory trick
+
+axis=0 → add row
+axis=1 → add column
+
+🔹 8. squeeze() – Remove Single-Dimension Axes
+Purpose:
+=> # Remove axes of size 1
+
+arr = np.array([[[1, 2, 3]]])
+
+print(arr.shape)
+
+squeezed = arr.squeeze()
+
+print(squeezed)
+print(squeezed.shape)
+
+
+🔹 9. Understanding Shape Compatibility (IMPORTANT)
+
+Rule:
+Total number of elements must remain same during reshape
+
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+#  This will cause an error
+# arr.reshape(4, 2)
+
+#  Correct
+arr.reshape(2, 3)
+
+🔹 10. Common Shape Transform Examples
+
+# Convert 1D to Row Vector
+arr = np.array([1, 2, 3])
+
+row = arr.reshape(1, -1)
+
+print(row)
+
+# Convert 1D to Column Vector
+
+col = arr.reshape(-1, 1)
+
+print(col)
+
+
+🔹 11. View vs Copy Summary
+
+| Method        | Returns            |
+| ------------- | ------------------ |
+| `reshape()`   | View (if possible) |
+| `ravel()`     | View (if possible) |
+| `flatten()`   | Copy               |
+| `transpose()` | View               |
+| `swapaxes()`  | View               |
+
+
+# Quick Cheat Sheet
+
+| Task             | Method          |
+| ---------------- | --------------- |
+| Change shape     | `reshape()`     |
+| Make 1D copy     | `flatten()`     |
+| Make 1D view     | `ravel()`       |
+| Transpose        | `.T`            |
+| Swap axes        | `swapaxes()`    |
+| Add dimension    | `expand_dims()` |
+| Remove dimension | `squeeze()`     |
+
+
+```
 
