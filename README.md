@@ -1660,8 +1660,699 @@ print(copy_arr.base)   # None → it's a copy
 
 
 ```
-📌 6. Indexing & Slicing
+📌 6. Advanced Indexing in NumPy
 ```python
-#
+✅ Requirements
+# Before starting, you should know:
+=> # Basic indexing & slicing
+=> # What is a NumPy array
+=> # Boolean values (True / False)
+
+🔹 Step 1: Fancy Indexing (Core Concept)
+# What is Fancy Indexing?
+=> # Selecting elements using another list or array of indexes
+=> # Unlike slicing, fancy indexing creates a copy
+
+🔹 Step 2: Indexing Using Python Lists
+
+# 1D Array Example
+
+
+import numpy as np 
+
+# Create a 1D NumPy array
+arr = np.array([10, 20, 30, 40, 50])
+
+# Fancy indexing:
+# We pass a LIST of index positions [0, 2, 4]
+# NumPy picks values from these positions
+selected = arr[[0, 2, 4]]
+
+# Print the new array
+print(selected)  # [10, 30, 50]
+
+# This part is the key
+arr[[0, 2, 4]]
+
+=> # [0, 2, 4] → tells NumPy which positions you want
+=> # NumPy goes one by one:
+=> # index 0 → 10
+=> # index 2 → 30
+=> # index 4 → 50
+
+# Note: Very important thing to remember
+=> # Fancy indexing always creates a COPY
+=> # Original array is NOT affected
+=> # Safe to modify
+
+selected[0] = 999
+print(arr)       # original stays same
+print(selected)  # only selected changes
+
+# Fancy Indexing vs Slicing
+
+| Feature              | Fancy Indexing | Slicing  |
+| -------------------- | -------------- | -------- |
+| Uses list of indexes | ✅              | ❌        |
+| Returns copy         | ✅              | ❌ (view) |
+| Original changes     | ❌              | ✅        |
+
+
+# 2D Array Example (Row Selection)
+
+import numpy as np  # Import NumPy
+
+# Create a 2D NumPy array (3 rows × 3 columns)
+arr_2d = np.array([
+    [10, 20, 30],   # Row index 0
+    [40, 50, 60],   # Row index 1
+    [70, 80, 90]    # Row index 2
+])
+
+# Fancy indexing for rows:
+# [0, 2] means → pick row 0 and row 2
+rows = arr_2d[[0, 2]]
+
+# Print selected rows
+print(rows)
+
+# Output:-
+[[10 20 30]
+ [70 80 90]]
+
+# Note: Important behavior
+=> # Fancy indexing on rows returns a NEW array (COPY)
+=> # Original arr_2d is not changed
+=> # Safe to modify rows
+
+rows[0, 0] = 999
+print(arr_2d)  # original remains same
+
+🔹 Step 3: Indexing Using NumPy Arrays
+Purpose:
+
+=> # Same as list indexing but faster and more flexible
+
+import numpy as np 
+
+# Create an array that stores index positions we want
+indexes = np.array([1, 3])   # Means: pick position 1 and position 3
+
+# Create a NumPy array with values
+arr = np.array([5, 10, 15, 20, 25])
+
+# Fancy indexing:
+# NumPy looks at indexes array and picks values at those positions
+print(arr[indexes])  # [10 20]
+
+# arr[indexes]
+=> # indexes = [1, 3]
+=> # NumPy:
+     => # goes to index 1 → value 10
+     => # goes to index 3 → value 20
+
+
+🔹 Step 4: Selecting Rows & Columns Together (2D Fancy Indexing)
+
+import numpy as np 
+# Create a 2D NumPy array (3 rows × 3 columns)
+arr = np.array([
+    [1, 2, 3],   # Row 0
+    [4, 5, 6],   # Row 1
+    [7, 8, 9]    # Row 2
+])
+
+# Fancy indexing with rows & columns together:
+# [0, 2]  → row positions
+# [1, 2]  → column positions
+# Pairing happens like:
+# (0,1) and (2,2)
+result = arr[[0, 2], [1, 2]]
+
+# Print selected values
+print(result) # [2 9]
+
+# What is happening (easy words)
+=> # Step 1: Understand the array with indexes
+
+        Col 0  Col 1  Col 2
+Row 0 →   1      2      3
+Row 1 →   4      5      6
+Row 2 →   7      8      9
+
+=> # Step 2: This line is the key
+
+arr[[0, 2], [1, 2]]
+
+# Let’s break it into two parts.
+
+=> # First list → ROW selection
+[0, 2]
+
+# Note: This means:
+=> # Pick row 0
+=> # Pick row 2
+
+Row 0 → [1, 2, 3]
+Row 2 → [7, 8, 9]
+
+=> # Second list → COLUMN selection
+[1, 2]
+
+# Note: This means:
+=> # From the selected rows, look at:
+    => # column 1
+    => # column 2
+
+# VERY IMPORTANT RULE → Pairwise selection
+# NumPy now pairs both lists by position, not by combination.
+
+Row list:    [0,  2]
+Column list: [1,  2]
+               ↓   ↓
+Pairs:      (0,1) (2,2)
+
+# How NumPy picks values (step-by-step)
+
+# First pair
+arr[0, 1]  # Row 0, Column 1 → 2
+
+# Second pair
+arr[2, 2]  # Row 2, Column 2 → 9
+
+
+=> # First list [0, 2] → rows to pick
+=> # Second list [1, 2] → columns to pick
+=> # NumPy pairs them position by position
+
+
+Step 3: Pairing happens like this
+
+| Row index | Column index | Value |
+| --------- | ------------ | ----- |
+| 0         | 1            | 2     |
+| 2         | 2            | 9     |
+
+
+🔹 Step 5: Boolean Indexing (Most Important)
+=> # What is Boolean Indexing?
+=> # Select elements using True/False conditions
+
+# Basic Boolean Condition
+
+arr = np.array([10, 20, 30, 40, 50])
+
+# Create a boolean mask
+mask = arr > 25
+
+print(mask)   # [False False  True  True  True]
+
+🔹 Step 6: Conditional Selection (Multiple Conditions)
+# AND Condition
+
+arr = np.array([10, 20, 30, 40, 50])
+
+# Select values greater than 20 AND less than 50
+result = arr[(arr > 20) & (arr < 50)]
+
+print(result)
+
+# OR Condition
+
+# Select values less than 20 OR greater than 40
+result = arr[(arr < 20) | (arr > 40)]
+
+print(result)
+
+# Always use:
+
+=> # & instead of and
+=> # | instead of or
+
+🔹 Step 7: Boolean Indexing in 2D Arrays
+
+import numpy as np 
+arr = np.array([
+    [5, 10, 15],
+    [20, 25, 30],
+    [35, 40, 45]
+])
+
+# Select all elements greater than 20
+print(arr[arr > 20])  # [25 30 35 40 45]
+
+🔹 Step 8: Filtering Rows Using Conditions
+Example: Select rows where first column > 10
+
+import numpy as np  # Import NumPy
+
+# Create a 2D NumPy array
+arr = np.array([
+    [5, 100],    # Row 0
+    [15, 200],   # Row 1
+    [25, 300]    # Row 2
+])
+
+# Step 1: Select all rows where first column (column 0) > 10
+# arr[:, 0] → selects all rows in column 0 → [5, 15, 25]
+# arr[:, 0] > 10 → checks condition for each value → [False, True, True]
+# Using this boolean array to filter rows: arr[boolean_array]
+rows = arr[arr[:, 0] > 10]
+
+# Step 2: Print filtered rows
+print(rows)
+
+# Output 
+[[ 15 200]
+ [ 25 300]]
+
+# Step-by-step explanation (simple)
+=> # 1. arr[:, 0] → pick all rows of column 0
+[5, 15, 25]
+
+=> # 2. arr[:, 0] > 10 → compare each value with 10
+[False, True, True]
+
+# Visual understanding
+
+Original array:
+[[  5 100]   ← first column 5 → skipped
+ [ 15 200]   ← first column 15 → included
+ [ 25 300]]  ← first column 25 → included
+
+# Output:
+[[ 15 200]
+ [ 25 300]]
+
+🔹 Step 9: Replacing Values Conditionally
+
+import numpy as np
+arr = np.array([10, 20, 30, 40, 50])
+arr[arr > 30] = 999
+print(arr)
+
+
+Replace negative values with 0
+
+import numpy as np
+arr = np.array([10, -5, 20, -3, 30])
+arr[arr < 0] = 0
+print(arr)
+
+🔹 Step 10: np.where() – Conditional Replace & Select
+=> # Replace using np.where
+
+import numpy as np 
+
+# Create a NumPy array
+arr = np.array([10, 20, 30, 40])
+
+# np.where(condition, value_if_true, value_if_false)
+# Check each value in arr:
+# - If value > 25 → put 1
+# - Else → put 0
+result = np.where(arr > 25, 1, 0)
+
+# Print the result array
+print(result)   # [0 0 1 1]
+
+🔹 Step 11: np.nonzero() – Get Index Positions
+
+import numpy as np  # Import NumPy
+
+# Create a NumPy array
+arr = np.array([0, 10, 0, 20, 30])
+
+# np.nonzero():
+# It finds positions (indexes) where value is NOT zero
+indexes = np.nonzero(arr)
+
+# Print the indexes
+print(indexes)  # (array([1, 3, 4]),)
+
+🔹 Step 12: Difference Between Slicing & Fancy Indexing
+
+import numpy as np  # Import NumPy
+
+# Original NumPy array
+arr = np.array([1, 2, 3, 4, 5])
+
+# SLICING:
+# arr[1:4] creates a VIEW (it shares memory with original array)
+slice_arr = arr[1:4]
+
+# FANCY INDEXING:
+# arr[[1, 2]] creates a COPY (new memory)
+fancy_arr = arr[[1, 2]]
+
+# Change all values inside the sliced array
+slice_arr[:] = 99
+
+# Print original array
+# It changes because slice_arr is a VIEW
+print(arr)  # [ 1 99 99 99  5 ]
+
+# Print fancy indexed array
+# It does NOT change because it is a COPY
+print(fancy_arr)  # [2 3]
+
+# What is happening (very simple)
+🔹 Slicing (arr[1:4])
+=> # Does not create a new array
+=> # It points to the same memory
+
+arr        → [1  2  3  4  5]
+slice_arr →     [2  3  4]   (same memory)
+
+
+🔹 Fancy indexing (arr[[1, 2]])
+
+=> # Creates a new array
+=> # Uses separate memory
+=> # Changing original does not affect it
+
+fancy_arr → [2  3]  (new memory)
+
+Key difference (must remember)
+
+| Feature              | Slicing | Fancy Indexing |
+| -------------------- | ------- | -------------- |
+| Uses range (`:`)     | ✅       | ❌              |
+| Uses list of indexes | ❌       | ✅              |
+| Returns view         | ✅       | ❌              |
+| Returns copy         | ❌       | ✅              |
+| Affects original     | ✅       | ❌              |
+
+
+# Note: One-line memory trick
+
+=> # Colon (:) = view → changes original
+=> # List ([]) = copy → safe
+ 
+```
+📌 7. Shape Manipulation in NumPy
+```python
+✅ Requirements
+# Before starting, you should know:
+=> # What shape means
+=> # 1D, 2D arrays
+=> # Basic indexing
+
+🔹 1. reshape() – Change Shape Without Changing Data
+Purpose:
+=> # Change the shape of an array
+=> # Total number of elements must stay the same
+
+import numpy as np 
+
+# Create a 1D NumPy array with 6 elements
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+# Reshape the 1D array into:
+# 2 rows and 3 columns
+# NOTE: Total elements must stay the same (2 × 3 = 6)
+new_arr = arr.reshape(2, 3)
+
+# Print the reshaped array
+print(new_arr)
+
+# output:
+[[1 2 3]
+ [4 5 6]]
+
+🔹 Example 2: Using -1 (Auto calculate dimension)
+
+import numpy as np  
+
+# Create a 1D NumPy array
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+# Reshape with -1:
+# 3 rows given
+# -1 tells NumPy: "calculate columns automatically"
+new_arr = arr.reshape(3, -1)
+
+# Print the reshaped array
+print(new_arr)
+
+
+# output:
+[[1 2]
+ [3 4]
+ [5 6]]
+
+# What -1 means (very easy)
+=> # -1 = "You decide for me, NumPy"
+=> # NumPy looks at:
+     => # Total elements = 6
+     => # Rows = 3
+=> # So columns = 6 ÷ 3 = 2
+
+# Important rules to remember
+
+1. Total elements must match
+reshape(2, 4)  # ❌ Error (8 needed, only 6 exist)
+
+2. Only one -1 is allowed
+reshape(-1, -1)  # ❌ Not allowed
+
+3. reshape usually returns a VIEW
+  => # Changing reshaped array may change original
+
+# One-line memory trick
+reshape = same data, new shape
+
+🔹 3. flatten() – Convert to 1D (Copy)
+Purpose:
+=> # Convert any array into 1D
+=> # Always returns a copy
+
+
+import numpy as np  
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+flat = arr.flatten()
+print(flat)
+
+🔹 3. ravel() – Convert to 1D (View if Possible)
+Purpose:
+
+=> # Similar to flatten()
+=> # Returns a view when possible (memory efficient)
+
+import numpy as np
+
+# Create a 2D array
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# Convert 2D array into 1D (flatten-like)
+rav = arr.ravel()
+
+# Modify the first element of ravel array
+rav[0] = 99
+
+# Original array also changes (because ravel gives a VIEW)
+print(arr)
+
+# output
+[[99  2  3]
+ [ 4  5  6]]
+
+# Note: ravel() → view → changes original (if possible)
+
+🔹 4. transpose() – Swap Rows & Columns
+Purpose:
+=> # Converts rows into columns
+=> # Used in matrix math
+
+import numpy as np
+
+# Create a 2D array
+arr = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# Swap rows and columns
+trans = arr.transpose()
+print(trans)
+
+# Output:
+[[1 4]
+ [2 5]
+ [3 6]]
+
+# Shape change
+
+print(arr.shape)    # (2, 3) → 2 rows, 3 columns
+print(trans.shape)  # (3, 2) → 3 rows, 2 columns
+
+# Note: transpose = rows ↔ columns
+
+🔹 5. .T – Shortcut for Transpose
+
+# Same as arr.transpose()
+print(arr.T)
+
+🔹 6. swapaxes() – Swap Any Two Axes
+Purpose
+=> # Swap specific axes
+=> # Mostly used in 3D or higher arrays
+
+Swap specific axes (useful in 3D+ arrays)
+
+import numpy as np
+arr = np.array([
+    [[1, 2], [3, 4]],
+    [[5, 6], [7, 8]]
+])
+
+# Swap axis 0 and axis 1
+swapped = arr.swapaxes(0, 1)
+print(swapped)
+
+🔹 expand_dims() – Add a new dimension
+
+import numpy as np 
+
+# Create a 1D array (only one row of values)
+arr = np.array([1, 2, 3])
+
+# Add axis at position 0 (make it a ROW)
+
+# Add a new dimension at axis 0
+# axis=0 means: add a new outer level
+# This turns the 1D array into a single row
+new_arr = np.expand_dims(arr, axis=0)
+
+# Print the new array
+print(new_arr)
+
+# Print the shape (rows, columns)
+print(new_arr.shape)
+
+
+# Output
+[[1 2 3]]
+(1, 3)
+
+# Add axis at position 1 (make it a COLUMN)
+
+# Add a new dimension at axis 1
+# axis=1 means: add a new inner level
+# This turns each value into its own row (column shape)
+new_arr = np.expand_dims(arr, axis=1)
+
+# Print the new array
+print(new_arr)
+
+# Print the shape
+print(new_arr.shape)
+
+
+# Output
+[[1]
+ [2]
+ [3]]
+(3, 1)
+
+# Visual comparison
+
+Original
+[1  2  3]
+
+axis=0 (row)
+[[1  2  3]]
+
+axis=1 (column)
+[[1]
+ [2]
+ [3]]
+
+# Why this is useful (real reason)
+
+=> # Machine Learning models expect 2D or 3D data
+=> # expand_dims() helps match required shape
+
+No data is changed, only shape
+
+# Easy memory trick
+
+axis=0 → add row
+axis=1 → add column
+
+🔹 8. squeeze() – Remove Single-Dimension Axes
+Purpose:
+=> # Remove axes of size 1
+
+arr = np.array([[[1, 2, 3]]])
+
+print(arr.shape)
+
+squeezed = arr.squeeze()
+
+print(squeezed)
+print(squeezed.shape)
+
+
+🔹 9. Understanding Shape Compatibility (IMPORTANT)
+
+Rule:
+Total number of elements must remain same during reshape
+
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+#  This will cause an error
+# arr.reshape(4, 2)
+
+#  Correct
+arr.reshape(2, 3)
+
+🔹 10. Common Shape Transform Examples
+
+# Convert 1D to Row Vector
+arr = np.array([1, 2, 3])
+
+row = arr.reshape(1, -1)
+
+print(row)
+
+# Convert 1D to Column Vector
+
+col = arr.reshape(-1, 1)
+
+print(col)
+
+
+🔹 11. View vs Copy Summary
+
+| Method        | Returns            |
+| ------------- | ------------------ |
+| `reshape()`   | View (if possible) |
+| `ravel()`     | View (if possible) |
+| `flatten()`   | Copy               |
+| `transpose()` | View               |
+| `swapaxes()`  | View               |
+
+
+# Quick Cheat Sheet
+
+| Task             | Method          |
+| ---------------- | --------------- |
+| Change shape     | `reshape()`     |
+| Make 1D copy     | `flatten()`     |
+| Make 1D view     | `ravel()`       |
+| Transpose        | `.T`            |
+| Swap axes        | `swapaxes()`    |
+| Add dimension    | `expand_dims()` |
+| Remove dimension | `squeeze()`     |
+
+
 ```
 
