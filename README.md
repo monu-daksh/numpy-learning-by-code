@@ -1294,7 +1294,7 @@ arr_2d = np.array([
     [70, 80, 90]    # Row 2
 ])
 
-🔹 1️⃣ Select a FULL column
+# Select a FULL column
 
 # Select ALL rows, but only column at index 1 (second column)
 print(arr_2d[:, 1])
@@ -1307,7 +1307,7 @@ print(arr_2d[:, 1])
 # Output
 => # [20 50 80]
 
-🔹 2️⃣ Select MULTIPLE columns
+#  Select MULTIPLE columns
 
 # Select ALL rows, and columns from index 0 up to (but not including) 2
 print(arr_2d[:, 0:2])
@@ -1337,5 +1337,231 @@ Easy memory trick
 arr_2d[:, -1]   # Last column
 arr_2d[:, :1]   # First column (keeps 2D shape)
 
+🔹 9. Slicing Rows and Columns Together
+
+import numpy as np
+
+# Create a 2D NumPy array (table)
+arr_2d = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+# Select:
+# Rows from index 0 up to (but not including) 2
+# Columns from index 1 up to (but not including) 3
+print(arr_2d[0:2, 1:3])
+
+=> # What is happening (very simple)
+General format:
+
+# arr_2d[row_start:row_end, col_start:col_end]
+
+=> First part → rows
+=> Second part → columns
+=> Start index → included
+=> End index → NOT included
+
+# Step-by-step breakdown
+
+0:2 → rows
+
+=> Row 0 → ✔ included
+=> Row 1 → ✔ included
+=> Row 2 → ❌ excluded
+
+1:3 → columns
+=> Column 1 → ✔ included
+=> Column 2 → ✔ included
+=> Column 3 → ❌ excluded (does not exist anyway)
+
+
+# Easy memory trick
+=> Before comma → rows
+=> After comma → columns
+
+#  One-line rule to remember
+
+=> arr_2d[a:b, c:d] → take rows a to b-1 and columns c to d-1
+=> arr_2d[1:3, 0:2]  # Rows 1–2, Columns 0–1
+=> arr_2d[:2, :2]    # Top-left corner
+=> arr_2d[:, 1:]     # All rows, columns from 1 to end
+
+# More simple examples
+arr_2d[1:3, 0:2]  # Rows 1–2, Columns 0–1
+arr_2d[:2, :2]    # Top-left corner
+arr_2d[:, 1:]     # All rows, columns from 1 to end
+
+
+🔹 10. Modifying Values Using Indexing
+
+=> # Modify a single value (1D array)
+
+import numpy as np 
+
+# Create a 1D NumPy array
+arr = np.array([10, 20, 30, 40, 50])
+
+# Change the value at index 0 (first element) to 100
+arr[0] = 100
+
+# Print the updated array
+print(arr)
+
+=> # Modify MULTIPLE values (slice assignment)
+
+# Replace values from index 1 up to (but not including) index 4 with 999
+arr[1:4] = 999
+
+# Print the updated array
+print(arr)
+
+What is happening
+=> # 1:4 → index 1, 2, 3
+=> # All selected elements get same new value
+=> # NumPy changes them in one operation
+
+=> # Modify values in a 2D array (rows & columns)
+
+import numpy as np 
+
+# Create a 2D NumPy array (table with rows & columns)
+arr_2d = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+# arr_2d[0, :] means:
+# 0  → select FIRST row (top row)
+# :  → select ALL columns in that row
+# = 0 → replace every selected value with 0
+arr_2d[0, :] = 0
+
+# Print updated array
+print(arr_2d)
+
+# Output
+
+[[ 0  0  0]
+ [40 50 60]
+ [70 80 90]]
+
+# What exactly happened (simple words)
+=> # NumPy selected the first row
+=> # It selected all columns inside that row
+=> # Then it replaced every value with 0
+
+# Visual understanding
+
+Before
+
+Row 0 → [10 20 30]
+Row 1 → [40 50 60]
+Row 2 → [70 80 90]
+
+After
+
+Row 0 → [ 0  0  0]
+Row 1 → [40 50 60]
+Row 2 → [70 80 90]
+
+# Easy rules to remember
+
+import numpy as np
+
+arr = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
+
+# Visual view:
+
+            Col 0   Col 1   Col 2
+          -----------------------
+Row 0   →     10     20     30
+Row 1   →     40     50     60
+Row 2   →     70     80     90
+
+# Change ONE specific cell (row + column)
+
+arr[1, 2] = 999
+
+# Meaning:
+=> # Row 1 (second row)
+=> # Column 2 (third column)
+=> # Changes only 60 → 999
+
+# Change MANY cells in SAME ROW (some columns)
+
+arr[1, 0:2] = 0
+
+# Meaning:
+=> Row 1
+=> Columns 0 and 1
+=> [40 50] → [0 0]
+
+# Change FULL ROW
+
+arr[0, :] = 5
+
+# Meaning:
+=> # Row 0
+=> # All columns (:)
+=> # [10 20 30] → [5 5 5]
+
+# Change FULL COLUMN
+
+arr[:, 1] = 777
+
+# Meaning:
+=> # All rows (:)
+=> # Column 1
+[20 50 80] → [777 777 777]
+
+
+# Change MULTIPLE ROWS & MULTIPLE COLUMNS
+
+arr[0:2, 1:3] = 99
+
+Meaning:
+=># Rows 0 and 1
+=># Columns 1 and 2
+
+# Select (not change) specific data
+
+=> # Get one value
+value = arr[2, 0]   # Row 2, Col 0 → 70
+
+=> # Get one full row
+row = arr[1, :]
+
+=> # Get one full column
+
+col = arr[:, 2]
+
+# Mental shortcut (VERY IMPORTANT)
+arr[ ROWS , COLUMNS ]
+
+=> # Before comma → vertical movement (down)
+=> # After comma → horizontal movement (right)
+
+
+
+
+
+
+
+
+
+
+
+
+```
+📌 6. Indexing & Slicing
+```python
+#
 ```
 
