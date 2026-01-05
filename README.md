@@ -1548,15 +1548,115 @@ arr[ ROWS , COLUMNS ]
 => # Before comma → vertical movement (down)
 => # After comma → horizontal movement (right)
 
+🔹 11. Boolean Indexing (IMPORTANT)
+Purpose:
+=> # Select elements based on condition
+
+arr = np.array([10, 20, 30, 40, 50])
+print(arr[arr > 25])  # Elements greater than 25
+
+=> # Modify using condition:
+
+arr[arr > 30] = 999  # All elements will be replace by 999
+print(arr)
 
 
+🔹 12. Fancy Indexing (Index with List)
+Purpose:
+=> # Select specific positions
 
+import numpy as np  # Import NumPy library
 
+# Create a NumPy array
+arr = np.array([10, 20, 30, 40, 50])
 
+# Use a LIST of indexes to pick specific positions
+# [0, 2, 4] means:
+# - pick index 0 → 10
+# - pick index 2 → 30
+# - pick index 4 → 50
+print(arr[[0, 2, 4]]) # [10 30 50]
 
+# What is happening (very simple)
+=> # Normal indexing → picks one position
+=> # Fancy indexing → picks many specific positions at once
 
+🔹 Fancy indexing in 2D (quick look)
 
+arr_2d = np.array([
+    [10, 20, 30],
+    [40, 50, 60],
+    [70, 80, 90]
+])
 
+# Pick specific rows
+print(arr_2d[[0, 2]])
+
+Output:
+
+[[10 20 30]
+ [70 80 90]]
+
+# Easy rule to remember
+=> # Fancy indexing = Indexing with a list or array
+
+🔹 13. Views vs Copies (VERY IMPORTANT)
+View (Changes affect original array)
+
+import numpy as np  # Import NumPy
+
+# Original NumPy array
+arr = np.array([1, 2, 3, 4, 5])
+
+# Take a slice from index 1 to 3 (NOT a new array, it's a VIEW)
+slice_arr = arr[1:4]
+
+# Change all values inside the slice
+slice_arr[:] = 99
+
+# Print original array
+print(arr)   # [ 1 99 99 99  5 ]
+
+# What is happening (very brief)
+=> # arr[1:4] → creates a VIEW
+=> # View = shares same memory
+=> # Changing slice → original array also changes
+
+# Visual idea
+
+arr = [1, 2, 3, 4, 5]
+          ↑  ↑  ↑
+        slice part
+
+# Output: arr = [1, 99, 99, 99, 5]
+
+# Copy (Changes do NOT affect original)
+
+arr = np.array([1, 2, 3, 4, 5])
+
+copy_arr = arr[1:4].copy()  # Explicit copy
+copy_arr[:] = 88
+
+print(arr)       # Original unchanged
+print(copy_arr)
+
+🔹 14. Checking If It’s a View or Copy
+
+print(slice_arr.base)  # If not None → it's a view
+print(copy_arr.base)   # None → it's a copy
+
+# Quick Cheat Sheet
+
+| Feature           | Example             |
+| ----------------- | ------------------- |
+| Basic indexing    | `arr[0]`            |
+| Negative indexing | `arr[-1]`           |
+| Slice             | `arr[1:4]`          |
+| Step              | `arr[::2]`          |
+| Row select        | `arr[1]`            |
+| Column select     | `arr[:, 1]`         |
+| Modify            | `arr[arr > 10] = 0` |
+| Copy              | `arr.copy()`        |
 
 
 ```
