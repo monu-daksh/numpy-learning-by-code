@@ -1283,11 +1283,59 @@ arr_2d[:2]   # First two rows (row 0 and 1)
 arr_2d[1:]   # From row 1 till end
 arr_2d[-1]   # Last row
 
+🔹 8. Column Selection
 
+import numpy as np  
 
+# Create a 2D NumPy array (table)
+arr_2d = np.array([
+    [10, 20, 30],   # Row 0
+    [40, 50, 60],   # Row 1
+    [70, 80, 90]    # Row 2
+])
 
+🔹 1️⃣ Select a FULL column
 
+# Select ALL rows, but only column at index 1 (second column)
+print(arr_2d[:, 1])
 
+# What is happening (simple meaning)
+=> : → take all rows
+=> 1 → take column index 1
+=> Result → one full column
+
+# Output
+=> # [20 50 80]
+
+🔹 2️⃣ Select MULTIPLE columns
+
+# Select ALL rows, and columns from index 0 up to (but not including) 2
+print(arr_2d[:, 0:2])
+
+What is happening
+=> : → all rows
+=> 0:2 → column 0 and column 1
+=> Column 2 is NOT included
+
+Visual understanding
+
+            Col 0   Col 1   Col 2
+          -----------------------
+Row 0   →     ✔      ✔      ✖
+Row 1   →     ✔      ✔      ✖
+Row 2   →     ✔      ✔      ✖
+
+Easy memory trick
+=> : before comma → all rows
+=> : after comma → all columns
+
+# One-line rule to remember
+=> arr_2d[:, col] → one column
+=> arr_2d[:, start:end] → many columns
+
+# More simple examples
+arr_2d[:, -1]   # Last column
+arr_2d[:, :1]   # First column (keeps 2D shape)
 
 ```
 
