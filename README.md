@@ -2353,3 +2353,269 @@ print(col)
 | Add dimension    | `expand_dims()` |
 | Remove dimension | `squeeze()`     |
 ```
+📌 8. Copy vs View in NumPy
+```python
+✅ Requirements
+Before starting, you should know:
+=> # Basic indexing & slicing
+=> # What is a NumPy array
+=> # That arrays live in memory
+
+🔹 1. What is a View?
+=> # A view is:
+=> # A new array object
+=> Shares the same memory with the original array
+
+import numpy as np
+# Create a NumPy array
+arr = np.array([10, 20, 30, 40, 50])
+
+# Take a slice from index 1 to 3
+# This does NOT create a new array
+# It creates a VIEW (shared memory)
+view_arr = arr[1:4]
+
+print(view_arr)   # [20 30 40]
+
+
+=> # Modify the view
+# Change the first element of the view
+view_arr[0] = 999
+
+# Print original array
+print(arr)
+
+# Output: [10 999 30 40 50]
+
+What is really happening? (Very simple)
+=> # arr[1:4] does NOT copy data
+=> # NumPy does not create a new array
+=> # It just points to the same memory
+=> # This is called a VIEW
+
+# Memory trick
+=> # Slice = Same memory
+=> # Fancy index = New memory
+
+🔹 2. What is a Copy
+Simple Definition:
+A copy is:
+
+=> # A completely new array
+=> # Has its own memory
+
+=> # Changing copy does NOT affect original
+
+Example: Copy Creation
+
+import numpy as np
+
+# Create a NumPy array
+arr = np.array([10, 20, 30, 40, 50])
+
+# Create a COPY of the array
+# .copy() makes a new array with its OWN memory
+copy_arr = arr.copy()
+
+# Change the first element of the copied array
+copy_arr[0] = 111
+
+# Print original array
+# Original array is NOT affected
+print(arr)
+
+# Print copied array
+# Only this array is changed
+print(copy_arr)
+
+=> # What is happening (very simple)
+# .copy() creates a new array
+# Data is duplicated
+# Memory is different
+# No connection to original array
+
+# Changing copy_arr does NOT affect arr(original arr)
+Because:
+=> # arr and copy_arr
+=> # do NOT share memory
+
+Think like this
+=> # .copy() = photocopy of data
+
+Easy memory rule
+=> # slice → shared memory (view)
+=> # slice → shared memory (view)
+
+🔹 3. How Slicing Creates Views (IMPORTANT)
+
+import numpy as np
+
+# Create a NumPy array
+arr = np.array([1, 2, 3, 4, 5])
+
+# Take a slice from index 1 to 3
+# This creates a VIEW (not a new array)
+slice_arr = arr[1:4]
+
+# Change ALL values inside the slice
+slice_arr[:] = 0
+
+# Print the original array
+print(arr)  # [1 0 0 0 5]
+
+# What is happening
+=> # arr[1:4] creates a VIEW
+=> # No new data is created
+=> # NumPy only points to part of arr
+=> # Both arrays share the same memory
+
+# slice_arr[:] = 0
+=> # : means all elements of the slice
+=> # You replace every selected value with 0
+
+🔹 4. When NumPy Creates Copies Automatically
+# Fancy Indexing → Copy
+
+arr = np.array([10, 20, 30, 40])
+
+fancy = arr[[0, 2]]
+
+fancy[0] = 999
+
+print(arr)    # Original unchanged
+print(fancy)
+
+# Boolean Indexing → Copy
+
+arr = np.array([10, 20, 30, 40])
+filtered = arr[arr > 20]
+filtered[:] = 0
+print(arr)       # Original unchanged
+print(filtered)
+
+🔹 5. copy() Method (Best Practice)
+# When to use?
+=> # When you do NOT want side effects
+=> # When modifying sliced data safely
+
+arr = np.array([5, 10, 15, 20])
+
+safe_copy = arr[1:3].copy()
+
+safe_copy[:] = 99
+
+print(arr)
+print(safe_copy)
+
+
+🔹 6. Memory Behavior (base attribute)
+
+# Check if array is a view or copy
+
+arr = np.array([1, 2, 3, 4])
+
+view_arr = arr[1:3]
+copy_arr = arr[1:3].copy()
+
+print(view_arr.base)  # Not None → View
+print(copy_arr.base)  # None → Copy
+
+
+🔹 7. View vs Copy Summary Table
+
+| Operation        | Result             |
+| ---------------- | ------------------ |
+| Slicing (`:`)    | View               |
+| `reshape()`      | View (if possible) |
+| `ravel()`        | View (if possible) |
+| Fancy indexing   | Copy               |
+| Boolean indexing | Copy               |
+| `copy()`         | Copy               |
+| `flatten()`      | Copy               |
+
+
+🔹 8. Common Mistakes (VERY IMPORTANT)
+# Mistake 1: Modifying Slice Thinking It’s Safe
+
+import numpy as np
+
+# Original NumPy array
+arr = np.array([1, 2, 3, 4])
+
+# Take a slice (this creates a VIEW, not a copy)
+temp = arr[1:3]
+
+# Change all values in the slice
+temp[:] = 100
+
+# Print original array
+# Original array changes too (unexpected for beginners)
+print(arr)  # [  1 100 100   4]
+
+# What went wrong?
+# 1. arr[1:3] creates a VIEW
+=> # temp does NOT have its own data
+=> # It shares memory with arr
+
+Indexes selected:
+arr = [1, 2, 3, 4]
+          ↑  ↑
+        temp slice
+
+# 2. temp[:] = 100
+=> # : means change everything inside temp
+=> # Since memory is shared
+      => # arr[1] becomes 100
+      => # arr[2] becomes 100
+
+# Correct Way: Use .copy()
+
+# Take a slice AND make a copy
+temp = arr[1:3].copy()
+
+# Modify the copy
+temp[:] = 100
+
+# Original array stays unchanged
+print(arr) # [1 2 3 4]
+
+# Easy rules to remember
+=> # Slice → View → shared memory
+=> # View change → original changes
+=> # Use .copy() when editing safely
+
+# Mistake 2: Boolean Filter Modify Original
+
+filtered = arr[arr > 2]
+filtered[:] = 0
+
+print(arr)  # No change (people expect change)
+
+Explanation:
+=> # Boolean indexing creates a copy
+
+🔹 9. Visual Memory Explanation (Simple Words)
+
+Original Array Memory
+┌────────────────────┐
+│ 10  20  30  40  50 │
+└────────────────────┘
+      ↑   ↑   ↑
+      View (slice)
+
+# Copy creates:
+
+New Memory
+┌────────────────────┐
+│ 20  30  40         │
+└────────────────────┘
+
+
+🔹 10. Best Practices (IMPORTANT)
+✔ Use slicing for performance
+✔ Use .copy() for safety
+✔ Always assume slice = view
+✔ Use base to debug memory behavior
+```
+
+
