@@ -2617,5 +2617,105 @@ New Memory
 ✔ Always assume slice = view
 ✔ Use base to debug memory behavior
 ```
+📌 9. Joining & Splitting Arrays
+```python
+✅ Requirements
+=> # Before starting, you should know:
+      => # 1D and 2D arrays
+      => # What rows and columns mean
+      => # shape of an array
+
+🔹 1. np.concatenate() (Base Function – Most Important)
+
+# What it does:
+=> # Joins arrays along an existing axis
+=> # This is the core function (others are wrappers)
+
+# ----------------Example 1: Join 1D arrays --------------------------
+
+import numpy as np
+
+# Create first 1D array
+a = np.array([1, 2, 3])
+
+# Create second 1D array
+b = np.array([4, 5, 6])
+
+# Join (concatenate) both arrays
+# Arrays are joined one after another (end-to-end)
+result = np.concatenate((a, b))
+
+# Print the joined array
+print(result)  # [1 2 3 4 5 6]
+
+Example 2: Join 2D arrays
+
+import numpy as np
+
+# --------- Example 1: Join 2D arrays ROW-WISE ---------
+
+# First 2D array (2 rows, 2 columns)
+a = np.array([
+    [1, 2],
+    [3, 4]
+])
+
+# Second 2D array (1 row, 2 columns)
+b = np.array([
+    [5, 6]
+])
+
+# axis = 0 → join by ROWS (top to bottom)
+# Number of COLUMNS must be same in both arrays
+row_result = np.concatenate((a, b), axis=0)
+
+print("Row-wise join:")
+print(row_result)
+
+
+# --------- Example 2: Join 2D arrays COLUMN-WISE ---------
+
+# First 2D array (2 rows, 2 columns)
+a = np.array([
+    [1, 2],
+    [3, 4]
+])
+
+# Second 2D array (2 rows, 1 column)
+b = np.array([
+    [5],
+    [6]
+])
+
+# axis = 1 → join by COLUMNS (left to right)
+# Number of ROWS must be same in both arrays
+col_result = np.concatenate((a, b), axis=1)
+print(col_result)
+
+🔹 axis = 0 (ROW-WISE)
+=> # Adds new rows
+=> # Stacks arrays vertically
+=> # Columns must match
+
+[1 2]        [1 2]
+[3 4]  +     [3 4]
+             [5 6]
+
+
+🔹 axis = 1 (COLUMN-WISE)
+=> # Adds new columns
+=> # Stacks arrays horizontally
+=> # Rows must match
+
+# Visual:
+[1 2]    [5]    [1 2 5]
+[3 4] +  [6] →  [3 4 6]
+
+
+
+
+```
+
+
 
 
