@@ -2712,6 +2712,34 @@ print(col_result)
 [3 4] +  [6] →  [3 4 6]
 
 
+🔹 2. np.vstack() (Vertical Stack)
+=> # vstack means “put one array on top of another”
+
+=> v = vertical
+=> vertical = top to bottom
+
+
+# Visual:
+
+=> # Imagine you have two rows of numbers written on paper:
+
+Row 1: 1  2  3
+Row 2: 4  5  6
+
+=> # If you stack them vertically, you place one row below the other:
+
+1  2  3
+4  5  6
+
+That is exactly what np.vstack() does.
+
+
+=> # Example 1: 1D Arrays (most common confusion)
+
+<img width="949" height="549" alt="image" src="https://github.com/user-attachments/assets/6f56ba48-7bdb-4215-adf2-399fcba5046f" />
+
+
+
 
 
 ```
