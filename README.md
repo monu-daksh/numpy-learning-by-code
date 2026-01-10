@@ -2736,7 +2736,8 @@ That is exactly what np.vstack() does.
 
 => # Example 1: 1D Arrays (most common confusion)
 
-<img width="949" height="549" alt="image" src="https://github.com/user-attachments/assets/6f56ba48-7bdb-4215-adf2-399fcba5046f" />
+![Preview](https://github.com/user-attachments/assets/6f56ba48-7bdb-4215-adf2-399fcba5046f)
+
 
 
 
