@@ -2736,9 +2736,274 @@ That is exactly what np.vstack() does.
 
 => # Example 1: 1D Arrays (most common confusion)
 
-![Preview](https://github.com/user-attachments/assets/6f56ba48-7bdb-4215-adf2-399fcba5046f)
+import numpy as np
+
+# First 1D array (just one row)
+a = np.array([1, 2, 3])
+
+# Second 1D array (another row)
+b = np.array([4, 5, 6])
+
+# Stack a and b vertically (top to bottom)
+result = np.vstack((a, b))
+
+print(result)  
+[[1 2 3]
+ [4 5 6]]
+
+=> # Example 2: 2D Arrays
+
+import numpy as np
+
+# First 2D array (1 row, 2 columns)
+a = np.array([[1, 2]])
+
+# Second 2D array (1 row, 2 columns)
+b = np.array([[3, 4]])
+
+# Stack vertically
+result = np.vstack((a, b))
+
+print(result)
 
 
+=> # Shape understanding (important)
+
+print(a.shape)        # (3,)
+print(result.shape)  # (2, 3)
+
+=> # Easy memory trick
+
+| Function | Meaning                               |
+| -------- | ------------------------------------- |
+| `vstack` | Stack **vertically** (top → bottom)   |
+| `hstack` | Stack **horizontally** (left → right) |
+
+
+🔹 3. np.hstack() (Horizontal Stack)
+=> # np.hstack() puts arrays side-by-side (left → right)
+
+=> # horizontal
+=> # horizontal = left to right
+
+Think like this (real-life)
+Imagine numbers written like this:
+
+Array A: 1  2  3
+Array B: 4  5  6
+
+If you join them side-by-side, you get:
+
+1  2  3  4  5  6
+
+Example 1: 1D Arrays
+
+import numpy as np
+
+# First 1D array
+a = np.array([1, 2, 3])
+
+# Second 1D array
+b = np.array([4, 5, 6])
+
+# Join a and b horizontally (side-by-side)
+result = np.hstack((a, b))
+
+# Print the final result
+print(result)  # [1 2 3 4 5 6]
+
+
+=> # Shape understanding (important)
+
+print(a.shape)       # (3,)
+print(result.shape) # (6,)
+
+=> # Example 2: 2D Arrays
+
+import numpy as np
+
+# First 2D array (2 rows, 1 column)
+a = np.array([[1],
+              [2]])
+
+# Second 2D array (2 rows, 1 column)
+b = np.array([[3],
+              [4]])
+
+# Join a and b horizontally (column-wise)
+result = np.hstack((a, b))
+
+# Print the result
+print(result)
+
+
+[[1 3]
+ [2 4]]
+
+=> # What is happening visually
+
+Before stacking:
+
+a =      b =
+1        3
+2        4
+
+After hstack:
+
+1  3
+2  4
+
+=> Columns are added
+=> Number of rows stays the same
+
+=> # Important rule (VERY IMPORTANT)
+For np.hstack():
+
+✅ Number of rows must be same
+❌ This will fail:
+
+a = np.array([[1], [2], [3]])
+b = np.array([[4], [5]])
+
+np.hstack((a, b))
+
+Because:
+=> # a has 3 rows
+=> # b has 2 rows
+
+=> # Easy memory trick
+
+| Function | Meaning                                    |
+| -------- | ------------------------------------------ |
+| `vstack` | Stack **top to bottom** (rows increase)    |
+| `hstack` | Stack **left to right** (columns increase) |
+
+One-line summary (memorize this)
+np.hstack() joins arrays side-by-side, creating more columns.
+
+🔹 4. np.dstack() (Depth Stack – 3D)
+
+=> # np.dstack() stacks arrays one behind another (depth-wise)
+
+=> #  d = depth
+=> # depth = front ↔ back (3rd dimension)
+
+"""
+Imagine transparent sheets of paper:
+Sheet A (numbers written)
+Sheet B (numbers written)
+
+You place one sheet on top of another
+Not left-right, not up-down — front-back
+"""
+
+# First understand the shape
+Your arrays:
+
+a = [[1, 2],
+     [3, 4]]
+
+b = [[5, 6],
+     [7, 8]]
+
+Each one is 2 rows × 2 columns
+
+a =        b =
+1  2       5  6
+3  4       7  8
+
+=> # Code with VERY SIMPLE comments
+
+import numpy as np
+
+# First 2D array (2 rows, 2 columns)
+a = np.array([[1, 2],
+              [3, 4]])
+
+# Second 2D array (same shape as a)
+b = np.array([[5, 6],
+              [7, 8]])
+
+# Stack a and b along the depth (3rd axis)
+result = np.dstack((a, b))
+
+# Print the result
+print(result)
+
+# Print the shape (rows, columns, depth)
+print(result.shape)
+
+# Output
+
+[[[1 5]
+  [2 6]]
+
+ [[3 7]
+  [4 8]]]
+
+(2, 2, 2)
+
+=> # What is ACTUALLY happening?
+"""
+Before dstack → 2D arrays
+
+Each array is flat like a page.
+
+After dstack → 3D array
+
+Now every cell has depth.
+
+Let’s look at one position:
+
+"""
+
+result[0][0]
+
+👉 That position contains:
+
+[1, 5]
+
+Meaning:
+
+1 came from array a
+
+5 came from array b
+
+
+Visual explanation
+=> # Think of result like this:
+
+=> # Depth layer 0 (a)
+
+1  2
+3  4
+
+
+=> # Depth layer 1 (b)
+
+5  6
+7  8
+
+=> # So NumPy stores it as:
+
+[
+  [ [1,5], [2,6] ],
+  [ [3,7], [4,8] ]
+]
+
+# Shape explained
+
+print(result.shape)
+
+(2, 2, 2)
+
+Means:
+
+2 rows
+
+2 columns
+
+2 depth layers
 
 
 
