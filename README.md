@@ -2712,7 +2712,438 @@ print(col_result)
 [3 4] +  [6] →  [3 4 6]
 
 
+🔹 2. np.vstack() (Vertical Stack)
+=> # vstack means “put one array on top of another”
 
+=> v = vertical
+=> vertical = top to bottom
+
+
+# Visual:
+
+=> # Imagine you have two rows of numbers written on paper:
+
+Row 1: 1  2  3
+Row 2: 4  5  6
+
+=> # If you stack them vertically, you place one row below the other:
+
+1  2  3
+4  5  6
+
+That is exactly what np.vstack() does.
+
+
+=> # Example 1: 1D Arrays (most common confusion)
+
+import numpy as np
+
+# First 1D array (just one row)
+a = np.array([1, 2, 3])
+
+# Second 1D array (another row)
+b = np.array([4, 5, 6])
+
+# Stack a and b vertically (top to bottom)
+result = np.vstack((a, b))
+
+print(result)  
+[[1 2 3]
+ [4 5 6]]
+
+=> # Example 2: 2D Arrays
+
+import numpy as np
+
+# First 2D array (1 row, 2 columns)
+a = np.array([[1, 2]])
+
+# Second 2D array (1 row, 2 columns)
+b = np.array([[3, 4]])
+
+# Stack vertically
+result = np.vstack((a, b))
+
+print(result)
+
+
+=> # Shape understanding (important)
+
+print(a.shape)        # (3,)
+print(result.shape)  # (2, 3)
+
+=> # Easy memory trick
+
+| Function | Meaning                               |
+| -------- | ------------------------------------- |
+| `vstack` | Stack **vertically** (top → bottom)   |
+| `hstack` | Stack **horizontally** (left → right) |
+
+
+🔹 3. np.hstack() (Horizontal Stack)
+=> # np.hstack() puts arrays side-by-side (left → right)
+
+=> # horizontal
+=> # horizontal = left to right
+
+Think like this (real-life)
+Imagine numbers written like this:
+
+Array A: 1  2  3
+Array B: 4  5  6
+
+If you join them side-by-side, you get:
+
+1  2  3  4  5  6
+
+Example 1: 1D Arrays
+
+import numpy as np
+
+# First 1D array
+a = np.array([1, 2, 3])
+
+# Second 1D array
+b = np.array([4, 5, 6])
+
+# Join a and b horizontally (side-by-side)
+result = np.hstack((a, b))
+
+# Print the final result
+print(result)  # [1 2 3 4 5 6]
+
+
+=> # Shape understanding (important)
+
+print(a.shape)       # (3,)
+print(result.shape) # (6,)
+
+=> # Example 2: 2D Arrays
+
+import numpy as np
+
+# First 2D array (2 rows, 1 column)
+a = np.array([[1],
+              [2]])
+
+# Second 2D array (2 rows, 1 column)
+b = np.array([[3],
+              [4]])
+
+# Join a and b horizontally (column-wise)
+result = np.hstack((a, b))
+
+# Print the result
+print(result)
+
+
+[[1 3]
+ [2 4]]
+
+=> # What is happening visually
+
+Before stacking:
+
+a =      b =
+1        3
+2        4
+
+After hstack:
+
+1  3
+2  4
+
+=> Columns are added
+=> Number of rows stays the same
+
+=> # Important rule (VERY IMPORTANT)
+For np.hstack():
+
+✅ Number of rows must be same
+❌ This will fail:
+
+a = np.array([[1], [2], [3]])
+b = np.array([[4], [5]])
+
+np.hstack((a, b))
+
+Because:
+=> # a has 3 rows
+=> # b has 2 rows
+
+=> # Easy memory trick
+
+| Function | Meaning                                    |
+| -------- | ------------------------------------------ |
+| `vstack` | Stack **top to bottom** (rows increase)    |
+| `hstack` | Stack **left to right** (columns increase) |
+
+One-line summary (memorize this)
+np.hstack() joins arrays side-by-side, creating more columns.
+
+🔹 4. np.dstack() (Depth Stack – 3D)
+
+=> # np.dstack() stacks arrays one behind another (depth-wise)
+
+=> #  d = depth
+=> # depth = front ↔ back (3rd dimension)
+
+"""
+Imagine transparent sheets of paper:
+Sheet A (numbers written)
+Sheet B (numbers written)
+
+You place one sheet on top of another
+Not left-right, not up-down — front-back
+"""
+
+# First understand the shape
+Your arrays:
+
+a = [[1, 2],
+     [3, 4]]
+
+b = [[5, 6],
+     [7, 8]]
+
+Each one is 2 rows × 2 columns
+
+a =        b =
+1  2       5  6
+3  4       7  8
+
+=> # Code with VERY SIMPLE comments
+
+import numpy as np
+
+# First 2D array (2 rows, 2 columns)
+a = np.array([[1, 2],
+              [3, 4]])
+
+# Second 2D array (same shape as a)
+b = np.array([[5, 6],
+              [7, 8]])
+
+# Stack a and b along the depth (3rd axis)
+result = np.dstack((a, b))
+
+# Print the result
+print(result)
+
+# Print the shape (rows, columns, depth)
+print(result.shape)
+
+# Output
+
+[[[1 5]
+  [2 6]]
+
+ [[3 7]
+  [4 8]]]
+
+(2, 2, 2)
+
+=> # What is ACTUALLY happening?
+"""
+Before dstack → 2D arrays
+
+Each array is flat like a page.
+
+After dstack → 3D array
+
+Now every cell has depth.
+
+Let’s look at one position:
+
+"""
+
+result[0][0]
+
+👉 That position contains:
+
+[1, 5]
+
+Meaning:
+
+1 came from array a
+
+5 came from array b
+
+
+Visual explanation
+=> # Think of result like this:
+
+=> # Depth layer 0 (a)
+
+1  2
+3  4
+
+
+=> # Depth layer 1 (b)
+
+5  6
+7  8
+
+=> # So NumPy stores it as:
+
+[
+  [ [1,5], [2,6] ],
+  [ [3,7], [4,8] ]
+]
+
+# Shape explained
+
+print(result.shape)
+
+(2, 2, 2)
+
+Means:
+
+2 rows
+
+2 columns
+
+2 depth layers
+
+🔹 5. np.column_stack() (Column Wise – Smart)
+It takes 1D arrays and turns them into columns of a table
+
+Real-life example
+Imagine you have this data:
+
+a → Roll numbers
+
+b → Marks
+
+Roll   Marks
+1      4
+2      5
+3      6
+
+=> # Example
+
+import numpy as np
+
+# First 1D array (will become column 1)
+a = np.array([1, 2, 3])
+
+# Second 1D array (will become column 2)
+b = np.array([4, 5, 6])
+
+# Convert both arrays into columns and join them
+result = np.column_stack((a, b))
+
+# Print the final 2D array
+print(result)
+
+
+What is happening step by step?
+
+Step 1: Original arrays (1D)
+a = [1, 2, 3]
+b = [4, 5, 6]
+
+Step 2: Convert into columns
+a → 1    b → 4
+     2        5
+     3        6
+
+Step 3: Join side by side
+[[1 4]
+ [2 5]
+ [3 6]]
+
+# Shape explained simply
+(3, 2)
+
+Means:
+=> # 3 rows
+=> # 2 columns
+
+Why not hstack?
+Let’s compare.
+
+=> # hstack
+
+np.hstack((a, b)) # [1 2 3 4 5 6]
+Loses table structure
+
+column_stack
+np.column_stack((a, b))
+
+[[1 4]
+ [2 5]
+ [3 6]]
+
+Perfect table / dataset format
+
+Why column_stack() is VERY useful
+
+Used when:
+=> Creating datasets
+=> ML features
+=> CSV-like data
+=> Pandas DataFrame input
+
+X = np.column_stack((age, salary, experience))
+Each array = one feature column
+
+
+Important rule
+
+=> # All arrays must have:
+   => # Same number of elements
+=> # Otherwise ❌ error.
+
+🔹 6. np.row_stack() (Row Wise)
+
+What it does:
+=> # Converts 1D arrays into rows
+=> # Same as vstack()
+
+
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+
+result = np.row_stack((a, b))
+
+print(result)
+
+🔹 7. Key Differences (VERY IMPORTANT)
+| Function       | Direction | Axis         |
+| -------------- | --------- | ------------ |
+| `concatenate`  | Any       | User-defined |
+| `vstack`       | Rows      | axis=0       |
+| `hstack`       | Columns   | axis=1       |
+| `dstack`       | Depth     | axis=2       |
+| `column_stack` | Columns   | Smart        |
+| `row_stack`    | Rows      | Smart        |
+
+
+🔹 8. Common Mistakes (Learn This)
+=> # Shape mismatch
+
+a = np.array([[1, 2]])
+b = np.array([[3, 4, 5]])
+
+# np.vstack((a, b))  ❌ Error
+
+Column counts must match for row stacking
+
+
+Quick Cheat Sheet
+
+np.concatenate((a, b), axis=0)  # rows
+np.concatenate((a, b), axis=1)  # columns
+np.vstack((a, b))               # row stack
+np.hstack((a, b))               # column stack
+np.dstack((a, b))               # depth stack
+np.column_stack((a, b))         # columns
+np.row_stack((a, b))            # rows
+
+
+
+🔹 9. np.split() (Base Function – Most Important)
 
 ```
 
