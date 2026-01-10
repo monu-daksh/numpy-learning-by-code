@@ -3005,8 +3005,145 @@ Means:
 
 2 depth layers
 
+🔹 5. np.column_stack() (Column Wise – Smart)
+It takes 1D arrays and turns them into columns of a table
+
+Real-life example
+Imagine you have this data:
+
+a → Roll numbers
+
+b → Marks
+
+Roll   Marks
+1      4
+2      5
+3      6
+
+=> # Example
+
+import numpy as np
+
+# First 1D array (will become column 1)
+a = np.array([1, 2, 3])
+
+# Second 1D array (will become column 2)
+b = np.array([4, 5, 6])
+
+# Convert both arrays into columns and join them
+result = np.column_stack((a, b))
+
+# Print the final 2D array
+print(result)
 
 
+What is happening step by step?
+
+Step 1: Original arrays (1D)
+a = [1, 2, 3]
+b = [4, 5, 6]
+
+Step 2: Convert into columns
+a → 1    b → 4
+     2        5
+     3        6
+
+Step 3: Join side by side
+[[1 4]
+ [2 5]
+ [3 6]]
+
+# Shape explained simply
+(3, 2)
+
+Means:
+=> # 3 rows
+=> # 2 columns
+
+Why not hstack?
+Let’s compare.
+
+=> # hstack
+
+np.hstack((a, b)) # [1 2 3 4 5 6]
+Loses table structure
+
+column_stack
+np.column_stack((a, b))
+
+[[1 4]
+ [2 5]
+ [3 6]]
+
+Perfect table / dataset format
+
+Why column_stack() is VERY useful
+
+Used when:
+=> Creating datasets
+=> ML features
+=> CSV-like data
+=> Pandas DataFrame input
+
+X = np.column_stack((age, salary, experience))
+Each array = one feature column
+
+
+Important rule
+
+=> # All arrays must have:
+   => # Same number of elements
+=> # Otherwise ❌ error.
+
+🔹 6. np.row_stack() (Row Wise)
+
+What it does:
+=> # Converts 1D arrays into rows
+=> # Same as vstack()
+
+
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+
+result = np.row_stack((a, b))
+
+print(result)
+
+🔹 7. Key Differences (VERY IMPORTANT)
+| Function       | Direction | Axis         |
+| -------------- | --------- | ------------ |
+| `concatenate`  | Any       | User-defined |
+| `vstack`       | Rows      | axis=0       |
+| `hstack`       | Columns   | axis=1       |
+| `dstack`       | Depth     | axis=2       |
+| `column_stack` | Columns   | Smart        |
+| `row_stack`    | Rows      | Smart        |
+
+
+🔹 8. Common Mistakes (Learn This)
+=> # Shape mismatch
+
+a = np.array([[1, 2]])
+b = np.array([[3, 4, 5]])
+
+# np.vstack((a, b))  ❌ Error
+
+Column counts must match for row stacking
+
+
+Quick Cheat Sheet
+
+np.concatenate((a, b), axis=0)  # rows
+np.concatenate((a, b), axis=1)  # columns
+np.vstack((a, b))               # row stack
+np.hstack((a, b))               # column stack
+np.dstack((a, b))               # depth stack
+np.column_stack((a, b))         # columns
+np.row_stack((a, b))            # rows
+
+
+
+🔹 9. np.split() (Base Function – Most Important)
 
 ```
 
