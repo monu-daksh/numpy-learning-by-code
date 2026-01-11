@@ -3144,7 +3144,302 @@ np.row_stack((a, b))            # rows
 
 
 🔹 9. np.split() (Base Function – Most Important)
+np.split() cuts one array into smaller pieces
 
+Think:
+=> # Like cutting a chocolate bar 
+=> # Or slicing a list into parts
+
+Two ways np.split() works
+
+=> # np.split() can split an array in 2 different ways:
+=> # Split into equal parts
+=> # Split at specific index positions
+
+Example 1: Split into equal parts
+
+import numpy as np
+
+# Original 1D array
+arr = np.array([10, 20, 30, 40, 50, 60])
+
+# Split the array into 3 equal parts
+result = np.split(arr, 3)
+
+# Print the result
+print(result)  # [array([10, 20]), array([30, 40]), array([50, 60])]
+
+# Important rule
+=> # Array length must be divisible by number of parts
+
+Common Error (why it fails)
+np.split(arr, 4)
+
+Error because:
+=> Array length = 6
+=> 6 ÷ 4  (not possible)
+
+Example 2: Split using index positions (MOST USED)
+
+import numpy as np
+
+# Original array
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+
+# Split at index 2 and index 5
+result = np.split(arr, [2, 5])
+
+print(result)
+
+What does [2, 5] mean?
+
+It means:
+
+Cut BEFORE index 2
+Cut BEFORE index 5
+
+
+Index map
+
+Index:  0  1  | 2  3  4 | 5  6
+Value:  1  2  | 3  4  5 | 6  7
+
+# Output
+
+[
+ array([1, 2]),       # arr[0:2]
+ array([3, 4, 5]),    # arr[2:5]
+ array([6, 7])        # arr[5:end]
+]
+
+Very important thing to understand
+Index number itself is NOT included in the left part
+(Same rule as Python slicing)
+arr[0:2]  # includes index 0,1
+
+
+Example 3: Single index split
+
+arr = np.array([10, 20, 30, 40, 50])
+
+result = np.split(arr, [3])
+
+print(result) # [array([10, 20, 30]), array([40, 50])]  # [10, 20, 30 | 40, 50]
+
+
+Example 4: Split into every element (edge case)
+
+arr = np.array([1, 2, 3])
+
+result = np.split(arr, 3)
+
+print(result)  # [array([1]), array([2]), array([3])]
+
+Real-life analogy (very helpful)
+
+Roll numbers = [1, 2, 3, 4, 5, 6]
+
+You want:
+
+Batch 1 → first 2 students
+
+Batch 2 → next 2
+
+Batch 3 → last 2
+
+
+np.split(arr, 3)
+Perfect use case.
+
+🔹 2. np.hsplit() (Horizontal Split – Columns)
+It splits an array into parts column-wise (left → right)
+
+Example (2D array)
+
+import numpy as np
+
+# 2D array (2 rows, 4 columns)
+arr = np.array([[1, 2, 3, 4],
+                [5, 6, 7, 8]])
+
+# Split array into 2 parts horizontally (by columns)
+result = np.hsplit(arr, 2)
+
+# Print the result
+print(result)
+
+
+[
+ array([[1, 2],
+        [5, 6]]),
+
+ array([[3, 4],
+        [7, 8]])
+]
+
+
+# What happened
+=> # Original columns = 4
+=> # Split into 2 parts
+=> # Each part gets 2 columns
+
+[1 2 | 3 4]
+[5 6 | 7 8]
+
+Rule (important)
+=> # Number of columns must be divisible by splits (This fails)
+np.hsplit(arr, 3)
+
+
+🔹 3. np.vsplit() (Vertical Split – Rows)
+It splits an array by rows
+
+Example 1: Equal row split
+
+import numpy as np
+
+# 2D array (4 rows, 2 columns)
+arr = np.array([
+    [1, 2],
+    [3, 4],
+    [5, 6],
+    [7, 8]
+])
+
+# Split array into 2 equal parts by rows
+result = np.vsplit(arr, 2)
+
+# Print result
+print(result)
+
+# Output
+
+[
+ array([[1, 2],
+        [3, 4]]),
+
+ array([[5, 6],
+        [7, 8]])
+]
+
+=> # What happened
+=> # Total rows = 4
+=> # Split into 2 parts
+=> # Each part gets 2 rows
+
+[1 2]
+[3 4]
+------
+[5 6]
+[7 8]
+
+
+Rule (important)
+=> # Rows must be divisible by number of splits(This gives error)
+np.vsplit(arr, 3)
+
+Example 2: Split using row index
+
+# Split after row index 1 and 3
+result = np.vsplit(arr, [1, 3])
+
+print(result)
+
+# What this means
+Split points:
+=> # After row 1
+=> # After row 3
+
+So parts become:
+arr[0:1]   → first row
+arr[1:3]   → middle rows
+arr[3:end] → last rows
+
+# output:
+[
+ array([[1, 2]]),
+
+ array([[3, 4],
+        [5, 6]]),
+
+ array([[7, 8]])
+]
+
+# Easy memory trick
+| Function   | Cuts                   |
+| ---------- | ---------------------- |
+| `hsplit()` | Columns (left → right) |
+| `vsplit()` | Rows (top → bottom)    |
+
+🔹 4. np.dsplit() (Depth Split – 3D Arrays)
+
+What it does:
+=> # Splits arrays along third axis
+=> # Used in image processing (RGB channels)
+
+Example: Split a 3D array
+
+arr = np.array([[[1, 2, 3],
+                 [4, 5, 6]],
+                
+                [[7, 8, 9],
+                 [10, 11, 12]]])
+
+print(arr.shape)
+
+
+result = np.dsplit(arr, 3)
+print(result)
+
+
+# Explanation:
+=> # Original shape: (2, 2, 3)
+=> # After split → 3 arrays, each with shape (2, 2, 1)
+=> # Each split represents one depth layer
+
+🔹 5. Axis Understanding (Very Important)
+| Function   | Splits Along | Axis         |
+| ---------- | ------------ | ------------ |
+| `split()`  | Any axis     | User defined |
+| `hsplit()` | Columns      | axis=1       |
+| `vsplit()` | Rows         | axis=0       |
+| `dsplit()` | Depth        | axis=2       |
+
+
+🔹 6. Real-Life Example (ML / Data Science)
+# Splitting features and labels
+
+data = np.array([[1, 85],
+                 [2, 90],
+                 [3, 95]])
+
+# Split into features and labels
+features, labels = np.hsplit(data, 2)
+
+print(features)
+print(labels)
+
+
+🔹 7. Common Mistakes (Very Important)
+# Unequal splits
+
+arr = np.array([1, 2, 3, 4, 5])
+np.split(arr, 2)  # ❌ Error
+
+# Correct way
+np.split(arr, [2])
+
+# Quick Cheat Sheet
+np.split(arr, 3)           # Equal split
+np.split(arr, [2, 5])      # Index split
+np.hsplit(arr, 2)          # Column split
+np.vsplit(arr, 2)          # Row split
+np.dsplit(arr, 3)          # Depth split
+
+# One-Line Memory Trick
+=> # h → horizontal → columns
+=> # v → vertical → rows
+=> # d → depth → 3D
 ```
 
 
