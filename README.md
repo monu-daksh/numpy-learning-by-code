@@ -3441,6 +3441,227 @@ np.dsplit(arr, 3)          # Depth split
 => # v → vertical → rows
 => # d → depth → 3D
 ```
+📌 10. Mathematical Operations
+```python
+
+🔹 1. Element-Wise Operations
+
+import numpy as np
+
+a = np.array([10, 20, 30])
+b = np.array([1, 2, 3])
+
+result = a + b
+print(result)  # [11 22 33]
+
+# Explanation:
+
+=> # 10 + 1
+=> # 20 + 2
+=> # 30 + 3
+Each index is calculated individually
+
+🔹 2. Addition (+ / np.add())
+
+a = np.array([5, 10, 15])
+b = np.array([2, 3, 4])
+
+# Using + operator
+print(a + b)
+
+# Using NumPy function
+print(np.add(a, b))
+# Both give the same result
+
+🔹 3. Subtraction (- / np.subtract())
+
+a = np.array([10, 20, 30])
+b = np.array([3, 5, 7])
+
+print(a - b)
+print(np.subtract(a, b))
+
+
+# Explanation:
+=> # 10 − 3
+=> # 20 − 5
+=> # 30 − 7
+
+🔹 4. Multiplication (* / np.multiply())
+
+a = np.array([2, 4, 6])
+b = np.array([3, 5, 7])
+
+print(a * b)
+print(np.multiply(a, b))   # [ 6 20 42 ]
+
+# It multiplies:
+2 * 3 = 6
+4 * 5 = 20
+6 * 7 = 42
+
+So the result is:  [6, 20, 42]
+
+
+🔹 5. Division (/ / np.divide())
+
+import numpy as np
+
+a = np.array([10, 20, 30])
+b = np.array([2, 5, 3])
+
+print(a / b)    # [5. 4. 10.]
+print(np.divide(a, b))  # [5. 4. 10.]
+
+# Note: Always returns float values
+
+🔹 6. Floor Division (// / np.floor_divide())
+
+a = np.array([10, 20, 25])
+b = np.array([3, 6, 4])
+
+print(a // b)    # [3 3 6]
+print(np.floor_divide(a, b)) # [3 3 6]
+
+=> # NumPy divides element-by-element, then:
+=> # removes the decimal part by rounding DOWN
+
+10 / 3 = 3.333 → floor → 3
+20 / 6 = 3.333 → floor → 3
+25 / 4 = 6.25  → floor → 6
+
+# So result becomes:
+[3, 3, 6]
+
+
+🔹 7. Modulus (% / np.mod())
+import numpy as np
+
+a = np.array([10, 20, 25])
+b = np.array([3, 6, 4])
+
+print(a % b)   # [1 2 1]
+print(np.mod(a, b)) # [1 2 1]
+
+# What is happening?
+=> # NumPy does element-wise modulus.
+=> # It gives remainder after division:
+
+10 % 3 = 1   (10 = 3×3 + 1)
+20 % 6 = 2   (20 = 6×3 + 2)
+25 % 4 = 1   (25 = 4×6 + 1)
+
+🔹 8. Power (** / np.power())
+
+import numpy as np
+
+a = np.array([2, 3, 4])
+
+# Square each element
+print(a ** 2)  # [ 4  9 16]
+
+# Cube each element
+print(np.power(a, 3))  # [ 8 27 64]
+
+🔹 9. Unary Operations (Single Array)
+
+import numpy as np
+
+a = np.array([10, -20, 30])
+
+print(-a)  # [-10  20 -30]
+
+# What is happening?
+NumPy changes the sign of each element:
+
+10   → -10
+-20  →  20
+30   → -30
+
+=> # Positive becomes negative
+=> # Negative becomes positive
+
+# Important thing
+=> # This does NOT change the original array
+=> # It creates a new array
+
+print(a)   # still same
+
+
+# Absolute Value (abs() / np.abs())
+a = np.array([-10, -20, 30])
+
+print(abs(a))
+print(np.abs(a))
+
+# Explanation:
+=> # Converts negative numbers to positive
+
+🔹 10. Rounding (round() / np.round())
+
+import numpy as np
+
+a = np.array([1.2, 2.6, 3.5, 4.9])
+
+print(np.round(a))  # [1. 3. 4. 5.]
+
+# Explanation:
+=> # Rounds to nearest whole number
+
+🔹 11. Floor (np.floor())
+
+import numpy as np
+
+a = np.array([1.9, 2.1, 3.7])
+
+print(np.floor(a))  # [1. 2. 3.]
+
+# Explanation:
+=> # Always rounds down
+
+🔹 12. Ceil (np.ceil())
+# np.ceil() is the opposite of np.floor()
+
+import numpy as np
+
+a = np.array([1.1, 2.3, 3.2])
+
+print(np.ceil(a))  # [2. 3. 4.]
+
+🔹 13. Operations with Scalars
+a = np.array([10, 20, 30])
+
+print(a + 5)    # Add 5 to every element
+print(a * 2)    # Multiply each element by 2
+
+# Note: This is called broadcasting
+
+🔹 14. Real-Life Example (Marks Increase)
+
+import numpy as np
+
+# Original marks of students
+marks = np.array([70, 80, 90])
+
+# Add 5 grace marks to every student
+updated_marks = marks + 5
+
+print(updated_marks) # [75 85 95]
+
+# Quick Cheat Sheet
+
+a + b          # Addition
+a - b          # Subtraction
+a * b          # Multiplication
+a / b          # Division
+a // b         # Floor division
+a % b          # Modulus
+a ** 2         # Power
+np.abs(a)      # Absolute
+np.round(a)    # Round
+np.floor(a)    # Floor
+np.ceil(a)     # Ceil
+```
 
 
 
