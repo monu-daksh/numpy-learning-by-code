@@ -3691,6 +3691,295 @@ print(np.sqrt(arr))
  This is a ufunc
 
 
+ 🔹 Why ufuncs are special
+=> # Work element by element
+=> # Much faster than Python loops
+=> # Code looks clean and short
+
+🔹 Trigonometric Functions (sin, cos, tan)
+=> # NumPy uses radians, not degrees.
+# Angle conversions:
+
+| Degrees | Radians |
+| ------- | ------- |
+| 0°      | 0       |
+| 90°     | π / 2   |
+| 180°    | π       |
+| 360°    | 2π      |
+
+# That’s why we use np.pi/2 instead of 90.
+
+Example: sin(), cos()
+
+import numpy as np
+# import → bring something from outside
+# numpy → a powerful math library
+# np → short name (alias) for numpy
+
+angles = np.array([0, np.pi/2, np.pi])
+# angles → a variable name
+# np.array → creates a NumPy array (like a list, but smarter)
+# [0, np.pi/2, np.pi] → values inside the array
+#
+# 0         → 0 radians (0°)
+# np.pi/2  → π divided by 2 → 90°
+# np.pi    → π → 180°
+
+print(np.sin(angles))
+# np.sin → sine function from NumPy
+# angles → NumPy applies sin() to EACH value
+# print → shows the result on screen
+
+print(np.cos(angles))
+# np.cos → cosine function from NumPy
+# angles → cosine of EACH value
+
+# What is np.pi?
+np.pi = 3.141592653589793
+
+# => What does NumPy do internally?
+What does NumPy do internally?
+# => np.sin(angles) means:
+np.sin(0)        # sin(0°) --> = 0
+np.sin(np.pi/2) # sin(90°) --> = 1
+np.sin(np.pi)   # sin(180°) --> 0
+
+
+# => np.cos(angles) means:
+np.cos(0)        # cos(0°) --> = 1
+np.cos(np.pi/2) # cos(90°) --> = 0
+np.cos(np.pi)   # cos(180°) --> -1
+
+# Note:-
+# => NumPy automatically loops over the array
+# => NumPy automatically loops over the array
+
+# print(np.sin(angles))  -->  [0. 1. 0.]
+# print(np.cos(angles))  --> [ 1.  0. -1.]
+
+# => Why dots after numbers? (0. 1.)
+Because NumPy uses floating-point numbers (decimals).
+# => 1. = 1.0
+# => 0. = 0.0
+
+#=> Very Simple Real-Life Example
+Imagine:
+
+# => Angles = directions
+# => sin() = vertical movement
+# => cos() = horizontal movement
+
+At 90°:
+# => You move straight up
+# => Horizontal = 0
+# => Vertical = 1
+
+🔹Convert degrees to radians (easy way)
+degrees = np.array([0, 30, 60, 90])
+
+radians = np.deg2rad(degrees)
+
+print(np.sin(radians))
+
+🔹 Exponential Functions
+=> # First: What is e?
+=> # e is a special mathematical number
+
+Value ≈ 2.71828
+
+=> # Just like:
+   => # π (pi) ≈ 3.14
+   => # e ≈ 2.718
+
+Exmaple:
+import numpy as np
+# import → bring numpy library
+# numpy → used for math and arrays
+# np → short name for numpy
+
+arr = np.array([1, 2, 3])
+# arr → a NumPy array
+# contains numbers: 1, 2, 3
+
+print(np.exp(arr))
+# np.exp → exponential function
+# exp(x) means → e raised to the power x
+# NumPy applies exp() to EACH value in arr
+
+=> # What EXACTLY happens inside?
+This line:
+np.exp(arr)
+
+Is equivalent to:
+[e¹, e², e³]
+
+Which means:
+[2.718¹, 2.718², 2.718³]
+
+Output (approximate)
+[ 2.71828183  7.3890561  20.08553692 ]
+
+
+# Why does NumPy do this automatically?
+Because NumPy is vectorized:
+
+# => You give it many values at once
+# => It applies the function to each value
+# => No loops needed
+
+# Example 2 — Single Number
+print(np.exp(1))  # e¹ = 2.718
+
+# Example 3 — Including 0 and Negative Numbers
+arr = np.array([-1, 0, 1])
+print(np.exp(arr))
+
+Calculation:
+
+| Input | Calculation | Result  |
+| ----- | ----------- | ------- |
+| -1    | e⁻¹         | ≈ 0.367 |
+| 0     | e⁰          | 1       |
+| 1     | e¹          | ≈ 2.718 |
+
+# e⁰ = 1 (important rule)
+
+# Example 4 — Manual vs NumPy
+# Without NumPy (slow way):
+
+import math
+
+print(math.exp(1))
+print(math.exp(2))
+print(math.exp(3))
+
+# With NumPy (fast way):
+np.exp([1, 2, 3])
+
+# NumPy = cleaner + faster
+
+# Why is exp() used in Machine Learning?
+1️⃣ Probability (Softmax)
+
+scores = np.array([1, 2, 3])
+exp_scores = np.exp(scores)
+probabilities = exp_scores / np.sum(exp_scores)
+
+print(probabilities)
+
+# Converts raw scores into probabilities
+
+2️⃣ Logistic Regression
+Formula: 1 / (1 + e⁻ˣ)
+
+3️⃣ Growth & Decay
+# => Population growth
+# => Interest calculation
+# => Neural network activations
+
+Very Simple Real-Life Meaning
+Think of exp() as FAST growth
+
+| x  | exp(x)   |
+| -- | -------- |
+| 1  | small    |
+| 2  | bigger   |
+| 3  | very big |
+| 10 | HUGE     |
+
+🔹 Logarithmic Functions
+# => Logarithmic Functions
+
+A logarithm answers this question: "How much power do you need?"
+
+#Example:
+# => log₂(8) = 3 → because 2³ = 8
+# => log₁₀(100) = 2 → because 10² = 100
+
+#So:
+# => log = reverse of power
+
+# NumPy Log Functions (What they mean)
+
+| Function     | Meaning                  |
+| ------------ | ------------------------ |
+| `np.log()`   | Natural log (base **e**) |
+| `np.log10()` | Log base **10**          |
+| `np.log2()`  | Log base **2**           |
+
+# What is e?
+# => e is a special math number ≈ 2.718
+# => Used in ML, growth, decay, science
+# => Natural log = log base e
+
+🔹 Comparison Functions (True / False output)
+# Example: greater than, equal to
+
+arr = np.array([10, 20, 30])
+
+print(arr > 15)
+print(arr == 20)
+
+# Output:
+# => True if condition matches
+# => False otherwise
+
+# Using NumPy functions
+# => print(np.greater(arr, 15))
+# => print(np.equal(arr, 20))
+
+# Maximum & Minimum
+a = np.array([10, 20, 30])
+b = np.array([15, 18, 25])
+
+print(np.maximum(a, b))
+print(np.minimum(a, b))
+
+🔹 Bitwise Functions (Binary level)
+# Used when working with bits.
+
+AND
+a = np.array([1, 2, 3])
+b = np.array([3, 2, 1])
+
+print(np.bitwise_and(a, b))
+
+OR
+print(np.bitwise_or(a, b))
+
+XOR
+print(np.bitwise_xor(a, b))
+
+NOT
+print(np.bitwise_not(a))
+
+🔹 More Common ufuncs (Must Know)
+Square root
+
+arr = np.array([4, 9, 16])
+print(np.sqrt(arr))
+
+Square
+print(np.square(arr))
+
+Absolute value
+arr = np.array([-10, 20, -30])
+print(np.abs(arr))
+
+Limit values (clip)
+arr = np.array([5, 15, 25])
+print(np.clip(arr, 10, 20))
+
+🔹 Performance Benefit (Why ufuncs are fast )
+Python way (slow)
+
+result = []
+for x in arr:
+    result.append(x * 2)
+
+NumPy ufunc way (fast)
+print(arr * 2)
+
 ```
 
 
