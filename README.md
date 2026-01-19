@@ -3663,6 +3663,36 @@ np.floor(a)    # Floor
 np.ceil(a)     # Ceil
 ```
 
+📌 11. Universal Functions (ufuncs)
+```python
+# What are ufuncs? (In very easy words)
+
+=> # ufuncs = functions that work on every element automatically
+
+
+# * Instead of doing this:
+
+# Normal Python (slow + messy)
+result = []
+for x in [1, 4, 9]:
+    result.append(x ** 0.5)
+
+# * NumPy lets you do this:
+
+import numpy as np
+
+arr = np.array([1, 4, 9])
+print(np.sqrt(arr))
+
+# What happened?
+# => sqrt() ran on each element
+# => No loop
+=> # Very fast
+ This is a ufunc
+
+
+```
+
 
 
 
