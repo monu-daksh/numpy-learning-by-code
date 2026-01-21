@@ -4494,7 +4494,156 @@ print(values)
 print(counts)
 # Output: [1 2 2 1 1]
 
+```
+📌 15. Random Module
+```python
+# What is the Random Module?
+# => Used to:
+# => Generate random numbers
+# => Simulate real-world randomness
+# => Create test data
 
+🔹 1. Random Numbers Basics
+import numpy as np
+print(np.random.rand())
+
+Note: Generate a random float between 0 and 1
+
+Meaning:
+Gives a random decimal number
+Range → 0 (inclusive) to 1 (exclusive)
+
+🔹 2. rand() → Random floats (uniform distribution)
+# 1D array with 5 random values
+arr = np.random.rand(5)
+print(arr)
+
+
+# Output: [0.95 0.73 0.60 0.15 0.15]
+# All values are between 0 and 1
+
+Explanation:
+Creates 5 random numbers
+All values are between 0 and 1
+
+# 2D array → 2 rows, 3 columns
+matrix = np.random.rand(2, 3)
+
+print(matrix)
+# Output:
+# [[0.15 0.05 0.86]
+#  [0.60 0.70 0.02]]
+
+
+🔹 3. randn() → Random numbers from normal distribution
+
+# Random numbers around mean = 0
+# Can be positive or negative
+arr = np.random.randn(5)
+
+print(arr)
+# Output: [-0.23  1.55 -0.98  0.45 -0.12]
+
+
+# 2D normal distribution
+matrix = np.random.randn(2, 3)
+
+print(matrix)
+# Output:
+# [[-0.46  0.38  1.12]
+#  [ 0.89 -1.23  0.15]]
+
+🔹 4. randint() → Random integers
+# Random integers from 1 to 9 (10 excluded)
+arr = np.random.randint(1, 10, size=5)
+
+print(arr)
+# Output: [3 7 1 9 4]
+
+
+# 2D random integers
+matrix = np.random.randint(0, 100, size=(2, 3))
+
+print(matrix)
+# Output:
+# [[45 12 89]
+#  [67 34 21]]
+
+🔹 5. choice() → Random selection
+arr = np.array([10, 20, 30, 40])
+
+# Pick ONE random value
+print(np.random.choice(arr))
+# Output: 30
+
+
+# Pick MULTIPLE random values
+print(np.random.choice(arr, size=3))
+# Output: [40 10 30]
+
+
+# Pick with PROBABILITY
+# Higher probability = higher chance
+print(np.random.choice(arr, size=3, p=[0.1, 0.2, 0.3, 0.4]))
+# Output example: [40 30 40]
+
+🔹 6. shuffle() → Shuffle array in-place
+arr = np.array([1, 2, 3, 4, 5])
+
+# Shuffles original array
+np.random.shuffle(arr)
+
+print(arr)
+# Output: [3 5 1 2 4]
+# Original order is changed
+
+🔹 7. permutation() → Shuffled copy
+arr = np.array([1, 2, 3, 4, 5])
+
+# Returns a NEW shuffled array
+new_arr = np.random.permutation(arr)
+
+print(new_arr)
+# Output: [2 5 1 4 3]
+
+print(arr)
+# Output: [1 2 3 4 5]
+# Original array stays same
+
+🔹 8. Setting Random Seed (VERY IMPORTANT)
+# Seed makes random numbers repeatable
+np.random.seed(42)
+
+print(np.random.rand(3))
+# Output: [0.37454012 0.95071431 0.73199394]
+
+# Run again → SAME output every time 
+
+🔹 9. Probability Distributions
+# NORMAL DISTRIBUTION
+# loc = mean, scale = standard deviation
+arr = np.random.normal(loc=0, scale=1, size=5)
+
+print(arr)
+# Output: [ 0.24 -0.91  1.46 -0.22  0.07]
+
+
+# UNIFORM DISTRIBUTION
+# Values between 10 and 20
+arr = np.random.uniform(low=10, high=20, size=5)
+
+print(arr)
+# Output: [13.2 18.6 11.4 19.8 15.3]
+
+
+# BINOMIAL DISTRIBUTION
+# n = number of trials
+# p = probability of success
+arr = np.random.binomial(n=10, p=0.5, size=5)
+
+print(arr)
+# Output: [4 6 5 7 3]
+# Simulates coin toss results
 ```
 
 
