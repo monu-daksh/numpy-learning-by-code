@@ -3663,6 +3663,548 @@ np.floor(a)    # Floor
 np.ceil(a)     # Ceil
 ```
 
+📌 11. Universal Functions (ufuncs)
+```python
+# What are ufuncs? (In very easy words)
+
+=> # ufuncs = functions that work on every element automatically
+
+
+# * Instead of doing this:
+
+# Normal Python (slow + messy)
+result = []
+for x in [1, 4, 9]:
+    result.append(x ** 0.5)
+
+# * NumPy lets you do this:
+
+import numpy as np
+
+arr = np.array([1, 4, 9])
+print(np.sqrt(arr))
+
+# What happened?
+# => sqrt() ran on each element
+# => No loop
+=> # Very fast
+ This is a ufunc
+
+
+ 🔹 Why ufuncs are special
+=> # Work element by element
+=> # Much faster than Python loops
+=> # Code looks clean and short
+
+🔹 Trigonometric Functions (sin, cos, tan)
+=> # NumPy uses radians, not degrees.
+# Angle conversions:
+
+| Degrees | Radians |
+| ------- | ------- |
+| 0°      | 0       |
+| 90°     | π / 2   |
+| 180°    | π       |
+| 360°    | 2π      |
+
+# That’s why we use np.pi/2 instead of 90.
+
+Example: sin(), cos()
+
+import numpy as np
+# import → bring something from outside
+# numpy → a powerful math library
+# np → short name (alias) for numpy
+
+angles = np.array([0, np.pi/2, np.pi])
+# angles → a variable name
+# np.array → creates a NumPy array (like a list, but smarter)
+# [0, np.pi/2, np.pi] → values inside the array
+#
+# 0         → 0 radians (0°)
+# np.pi/2  → π divided by 2 → 90°
+# np.pi    → π → 180°
+
+print(np.sin(angles))
+# np.sin → sine function from NumPy
+# angles → NumPy applies sin() to EACH value
+# print → shows the result on screen
+
+print(np.cos(angles))
+# np.cos → cosine function from NumPy
+# angles → cosine of EACH value
+
+# What is np.pi?
+np.pi = 3.141592653589793
+
+# => What does NumPy do internally?
+What does NumPy do internally?
+# => np.sin(angles) means:
+np.sin(0)        # sin(0°) --> = 0
+np.sin(np.pi/2) # sin(90°) --> = 1
+np.sin(np.pi)   # sin(180°) --> 0
+
+
+# => np.cos(angles) means:
+np.cos(0)        # cos(0°) --> = 1
+np.cos(np.pi/2) # cos(90°) --> = 0
+np.cos(np.pi)   # cos(180°) --> -1
+
+# Note:-
+# => NumPy automatically loops over the array
+# => NumPy automatically loops over the array
+
+# print(np.sin(angles))  -->  [0. 1. 0.]
+# print(np.cos(angles))  --> [ 1.  0. -1.]
+
+# => Why dots after numbers? (0. 1.)
+Because NumPy uses floating-point numbers (decimals).
+# => 1. = 1.0
+# => 0. = 0.0
+
+#=> Very Simple Real-Life Example
+Imagine:
+
+# => Angles = directions
+# => sin() = vertical movement
+# => cos() = horizontal movement
+
+At 90°:
+# => You move straight up
+# => Horizontal = 0
+# => Vertical = 1
+
+🔹Convert degrees to radians (easy way)
+degrees = np.array([0, 30, 60, 90])
+
+radians = np.deg2rad(degrees)
+
+print(np.sin(radians))
+
+🔹 Exponential Functions
+=> # First: What is e?
+=> # e is a special mathematical number
+
+Value ≈ 2.71828
+
+=> # Just like:
+   => # π (pi) ≈ 3.14
+   => # e ≈ 2.718
+
+Exmaple:
+import numpy as np
+# import → bring numpy library
+# numpy → used for math and arrays
+# np → short name for numpy
+
+arr = np.array([1, 2, 3])
+# arr → a NumPy array
+# contains numbers: 1, 2, 3
+
+print(np.exp(arr))
+# np.exp → exponential function
+# exp(x) means → e raised to the power x
+# NumPy applies exp() to EACH value in arr
+
+=> # What EXACTLY happens inside?
+This line:
+np.exp(arr)
+
+Is equivalent to:
+[e¹, e², e³]
+
+Which means:
+[2.718¹, 2.718², 2.718³]
+
+Output (approximate)
+[ 2.71828183  7.3890561  20.08553692 ]
+
+
+# Why does NumPy do this automatically?
+Because NumPy is vectorized:
+
+# => You give it many values at once
+# => It applies the function to each value
+# => No loops needed
+
+# Example 2 — Single Number
+print(np.exp(1))  # e¹ = 2.718
+
+# Example 3 — Including 0 and Negative Numbers
+arr = np.array([-1, 0, 1])
+print(np.exp(arr))
+
+Calculation:
+
+| Input | Calculation | Result  |
+| ----- | ----------- | ------- |
+| -1    | e⁻¹         | ≈ 0.367 |
+| 0     | e⁰          | 1       |
+| 1     | e¹          | ≈ 2.718 |
+
+# e⁰ = 1 (important rule)
+
+# Example 4 — Manual vs NumPy
+# Without NumPy (slow way):
+
+import math
+
+print(math.exp(1))
+print(math.exp(2))
+print(math.exp(3))
+
+# With NumPy (fast way):
+np.exp([1, 2, 3])
+
+# NumPy = cleaner + faster
+
+# Why is exp() used in Machine Learning?
+1️⃣ Probability (Softmax)
+
+scores = np.array([1, 2, 3])
+exp_scores = np.exp(scores)
+probabilities = exp_scores / np.sum(exp_scores)
+
+print(probabilities)
+
+# Converts raw scores into probabilities
+
+2️⃣ Logistic Regression
+Formula: 1 / (1 + e⁻ˣ)
+
+3️⃣ Growth & Decay
+# => Population growth
+# => Interest calculation
+# => Neural network activations
+
+Very Simple Real-Life Meaning
+Think of exp() as FAST growth
+
+| x  | exp(x)   |
+| -- | -------- |
+| 1  | small    |
+| 2  | bigger   |
+| 3  | very big |
+| 10 | HUGE     |
+
+🔹 Logarithmic Functions
+# => Logarithmic Functions
+
+A logarithm answers this question: "How much power do you need?"
+
+#Example:
+# => log₂(8) = 3 → because 2³ = 8
+# => log₁₀(100) = 2 → because 10² = 100
+
+#So:
+# => log = reverse of power
+
+# NumPy Log Functions (What they mean)
+
+| Function     | Meaning                  |
+| ------------ | ------------------------ |
+| `np.log()`   | Natural log (base **e**) |
+| `np.log10()` | Log base **10**          |
+| `np.log2()`  | Log base **2**           |
+
+# What is e?
+# => e is a special math number ≈ 2.718
+# => Used in ML, growth, decay, science
+# => Natural log = log base e
+
+🔹 Comparison Functions (True / False output)
+# Example: greater than, equal to
+
+arr = np.array([10, 20, 30])
+
+print(arr > 15)
+print(arr == 20)
+
+# Output:
+# => True if condition matches
+# => False otherwise
+
+# Using NumPy functions
+# => print(np.greater(arr, 15))
+# => print(np.equal(arr, 20))
+
+# Maximum & Minimum
+a = np.array([10, 20, 30])
+b = np.array([15, 18, 25])
+
+print(np.maximum(a, b))
+print(np.minimum(a, b))
+
+🔹 Bitwise Functions (Binary level)
+# Used when working with bits.
+
+AND
+a = np.array([1, 2, 3])
+b = np.array([3, 2, 1])
+
+print(np.bitwise_and(a, b))
+
+OR
+print(np.bitwise_or(a, b))
+
+XOR
+print(np.bitwise_xor(a, b))
+
+NOT
+print(np.bitwise_not(a))
+
+🔹 More Common ufuncs (Must Know)
+Square root
+
+arr = np.array([4, 9, 16])
+print(np.sqrt(arr))
+
+Square
+print(np.square(arr))
+
+Absolute value
+arr = np.array([-10, 20, -30])
+print(np.abs(arr))
+
+Limit values (clip)
+arr = np.array([5, 15, 25])
+print(np.clip(arr, 10, 20))
+
+🔹 Performance Benefit (Why ufuncs are fast )
+Python way (slow)
+
+result = []
+for x in arr:
+    result.append(x * 2)
+
+NumPy ufunc way (fast)
+print(arr * 2)
+
+```
+📌 12. Broadcasting (Core Concept)
+```python
+What is Broadcasting? (Simple Meaning)
+# Broadcasting = NumPy automatically adjusts shapes so operations can work
+# “NumPy repeats smaller data to match bigger data — without copying it”
+
+Example
+
+import numpy as np
+arr = np.array([1, 2, 3])
+print(arr + 10)
+
+What happened?
+# => 10 is applied to every element
+# => NumPy broadcasted 10 → [10, 10, 10]
+
+🔹 Why Broadcasting is Useful
+# Without broadcasting:
+
+# You would need a loop (slow)
+result = []
+for x in arr:
+    result.append(x + 10)
+
+# With broadcasting:
+print(arr + 10)
+
+🔹 Broadcasting Rules (VERY IMPORTANT)
+# NumPy checks shapes from right to left.
+
+# Two dimensions are compatible if:
+# => 1. They are equal, OR
+# => 2. One of them is 1
+
+🔹 1. Scalar Broadcasting (Most Common)
+# Scalar + Array
+
+arr = np.array([5, 10, 15])
+result = arr * 2
+print(result)
+
+🔹 2. Vector Broadcasting (1D + 2D)
+#Adding a row vector to a matrix
+
+matrix = np.array([[1, 2, 3],
+                   [4, 5, 6]])
+
+vector = np.array([10, 20, 30])
+result = matrix + vector
+print(result)
+
+# A matrix is a table of numbers (rows x columns)
+# Here: 2 rows, 3 columns
+matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# A vector is a single list of numbers
+# Length = 3 (same as number of columns in matrix)
+vector = np.array([10, 20, 30])
+
+🔹 3. Column Broadcasting (Using reshape)
+import numpy as np
+
+# A matrix (2 rows, 3 columns)
+matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# A simple list of numbers
+# reshape(2, 1), (2 rows, 1 cloumn) turns it into a column (vertical)
+column = np.array([10, 20]).reshape(2, 1)
+
+# NumPy automatically adds:
+# 10 to the first row
+# 20 to the second row
+result = matrix + column
+
+print(result)
+
+🔹 4. Matrix Broadcasting (2D + 2D)
+# Same shape → works
+
+import numpy as np
+
+a = np.array([[1, 2],
+              [3, 4]])
+
+b = np.array([[10, 20],
+              [30, 40]])
+
+print(a + b)
+
+
+# One dimension is 1 → still works
+a = np.array([[1, 2, 3],
+              [4, 5, 6]])
+
+b = np.array([[10, 20, 30]])
+
+print(a + b)
+
+🔹 5. Broadcasting with Different Shapes (Rule in Action)
+a = np.array([[1],
+              [2],
+              [3]])
+
+b = np.array([10, 20, 30])
+
+print(a + b)
+
+# Explanation:
+# => a shape → (3,1)
+# => b shape → (3,)
+# => NumPy expands them to (3,3)
+
+🔹 6. Common Broadcasting Errors
+Shape mismatch
+
+a = np.array([1, 2, 3])
+b = np.array([10, 20])
+
+# print(a + b)  Error
+
+# Why?
+# => Shapes (3,) and (2,) cannot match
+
+🔹 7. How to Fix Broadcasting Errors
+import numpy as np
+
+# Example matrix (2 rows, 2 columns)
+matrix = np.array([
+    [1, 2],
+    [3, 4]
+])
+
+#  This will cause a broadcasting error
+# Because shape (2,) does NOT clearly match rows or columns
+# b = np.array([10, 20])
+# result = matrix + b
+
+
+#  FIX 1: Using reshape()
+# reshape(1, 2) makes it a ROW vector
+# Shape becomes (1 row, 2 columns)
+b_row = np.array([10, 20]).reshape(1, 2)
+
+# NumPy adds [10, 20] to EACH row of the matrix
+result_row = matrix + b_row
+print("Using reshape (row):")
+print(result_row)
+
+
+#  FIX 2: Using newaxis
+# [:, np.newaxis] turns array into a COLUMN vector
+# Shape becomes (2 rows, 1 column)
+b_col = np.array([10, 20])[:, np.newaxis]
+
+# NumPy adds:
+# 10 to first row
+# 20 to second row
+result_col = matrix + b_col
+print(result_col)
+
+
+🔹 8. Broadcasting with Functions (ufuncs)
+
+arr = np.array([1, 4, 9])
+
+print(np.sqrt(arr + 10))
+
+# Explanation:
+# => 10 is broadcasted
+# => Then sqrt() applied to each element
+
+🔹 9. Real-World Use Cases
+
+Example 1: Increase salaries
+
+salary = np.array([30000, 40000, 50000])
+updated_salary = salary + 5000
+print(updated_salary)
+
+Example 2: Normalize marks
+marks = np.array([70, 80, 90])
+percentage = (marks / 100) * 100
+print(percentage)
+
+Example 3: Add bias in ML
+weights = np.array([[0.5, 0.2, 0.1],
+                    [0.4, 0.6, 0.3]])
+
+bias = np.array([0.1, 0.2, 0.3])
+
+output = weights + bias
+
+print(output)
+
+
+🔹 10. Broadcasting Visual Summary
+(3, 3) + (3,) → OK
+(3, 3) + (1, 3) → OK
+(3, 3) + (3, 1) → OK
+(3,)   + (2,)   → ❌
+
+Golden Rule (Remember This)
+# If shapes match from right to left → broadcasting works
+
+# Quick Cheat Sheet
+arr + 5               # scalar broadcasting
+matrix + vector       # row broadcasting
+matrix + column       # column broadcasting
+reshape()             # fix shape issues
+np.newaxis            # add dimension
+
+
+
+
+
+
+```
+
 
 
 
