@@ -4344,6 +4344,158 @@ print(np.cumsum(matrix, axis=1))
 #  [ 4  9 15]]
 
 ```
+📌 14. Sorting & Searching
+```python
+
+import numpy as np
+arr = np.array([30, 10, 50, 20, 40])
+
+🔹 1. sort() → Sort values
+Basic sorting (ascending)
+
+# np.sort() returns a NEW sorted array (original stays same)
+sorted_arr = np.sort(arr)
+
+print(sorted_arr)
+# Output: [10 20 30 40 50]
+
+# Original array is NOT changed
+print(arr)
+# Output: [30 10 50 20 40]
+
+
+# Sort IN-PLACE (original array changes)
+arr.sort()
+print(arr)
+# Output: [10 20 30 40 50]
+
+🔹 2. argsort() → Sort indices
+arr = np.array([30, 10, 50, 20])
+
+# argsort returns indices that would sort the array
+indices = np.argsort(arr)
+
+print(indices)
+# Output: [1 3 0 2]
+
+# Explanation:
+# index 1 → value 10 (smallest)
+# index 3 → value 20
+# index 0 → value 30
+# index 2 → value 50
+
+# Use indices to get sorted array
+print(arr[indices])
+# Output: [10 20 30 50]
+
+🔹 3. Sorting Along Axis (2D Arrays)
+matrix = np.array([
+    [3, 1, 2],
+    [6, 4, 5]
+])
+
+# Sort each ROW (axis=1 → across rows)
+print(np.sort(matrix, axis=1))
+# Output:
+# [[1 2 3]
+#  [4 5 6]]
+
+# Sort each COLUMN (axis=0 → down columns)
+print(np.sort(matrix, axis=0))
+# Output:
+# [[3 1 2]
+#  [6 4 5]]
+
+matrix = np.array([
+    [3, 1, 2],
+    [6, 4, 5]
+])
+
+# Sort each ROW (axis=1 → across rows)
+print(np.sort(matrix, axis=1))
+# Output:
+# [[1 2 3]
+#  [4 5 6]]
+
+# Sort each COLUMN (axis=0 → down columns)
+print(np.sort(matrix, axis=0))
+# Output:
+# [[3 1 2]
+#  [6 4 5]]
+
+🔹 4. where() → Find values using condition
+arr = np.array([10, 20, 30, 40, 50])
+
+# Find indices where condition is TRUE
+result = np.where(arr > 30)
+
+print(result)
+# Output: (array([3, 4]),)
+
+# Get actual values using indices
+print(arr[result])
+# Output: [40 50]
+
+
+# Replace values using where()
+# If value > 30 → put 100
+# Else → keep original value
+new_arr = np.where(arr > 30, 100, arr)
+
+print(new_arr)
+# Output: [10 20 30 100 100]
+
+🔹 5. searchsorted() → Find insert position
+arr = np.array([10, 20, 30, 40])  # MUST be sorted
+
+# Find where 25 should be inserted
+index = np.searchsorted(arr, 25)
+
+print(index)
+# Output: 2
+# Means: 25 fits between 20 and 30
+
+# Insert multiple values
+values = [15, 35]
+print(np.searchsorted(arr, values))
+# Output: [1 3]
+
+🔹 6. Conditional Searching (Boolean Indexing)
+arr = np.array([10, 15, 20, 25, 30])
+
+# Select values greater than 20
+filtered = arr[arr > 20]
+
+print(filtered)
+# Output: [25 30]
+
+# Combine conditions
+# Select values > 10 AND < 30
+filtered = arr[(arr > 10) & (arr < 30)]
+
+print(filtered)
+# Output: [15 20 25]
+
+🔹 7. unique() → Get unique values
+arr = np.array([1, 2, 2, 3, 3, 4, 5])
+
+# Remove duplicates
+unique_values = np.unique(arr)
+
+print(unique_values)
+# Output: [1 2 3 4 5]
+
+# Get unique values with their counts
+values, counts = np.unique(arr, return_counts=True)
+
+print(values)
+# Output: [1 2 3 4 5]
+
+print(counts)
+# Output: [1 2 2 1 1]
+
+
+```
 
 
 
