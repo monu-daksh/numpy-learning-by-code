@@ -3981,6 +3981,229 @@ NumPy ufunc way (fast)
 print(arr * 2)
 
 ```
+📌 12. Broadcasting (Core Concept)
+```python
+What is Broadcasting? (Simple Meaning)
+# Broadcasting = NumPy automatically adjusts shapes so operations can work
+# “NumPy repeats smaller data to match bigger data — without copying it”
+
+Example
+
+import numpy as np
+arr = np.array([1, 2, 3])
+print(arr + 10)
+
+What happened?
+# => 10 is applied to every element
+# => NumPy broadcasted 10 → [10, 10, 10]
+
+🔹 Why Broadcasting is Useful
+# Without broadcasting:
+
+# You would need a loop (slow)
+result = []
+for x in arr:
+    result.append(x + 10)
+
+# With broadcasting:
+print(arr + 10)
+
+🔹 Broadcasting Rules (VERY IMPORTANT)
+# NumPy checks shapes from right to left.
+
+# Two dimensions are compatible if:
+# => 1. They are equal, OR
+# => 2. One of them is 1
+
+🔹 1. Scalar Broadcasting (Most Common)
+# Scalar + Array
+
+arr = np.array([5, 10, 15])
+result = arr * 2
+print(result)
+
+🔹 2. Vector Broadcasting (1D + 2D)
+#Adding a row vector to a matrix
+
+matrix = np.array([[1, 2, 3],
+                   [4, 5, 6]])
+
+vector = np.array([10, 20, 30])
+result = matrix + vector
+print(result)
+
+# A matrix is a table of numbers (rows x columns)
+# Here: 2 rows, 3 columns
+matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# A vector is a single list of numbers
+# Length = 3 (same as number of columns in matrix)
+vector = np.array([10, 20, 30])
+
+🔹 3. Column Broadcasting (Using reshape)
+import numpy as np
+
+# A matrix (2 rows, 3 columns)
+matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# A simple list of numbers
+# reshape(2, 1), (2 rows, 1 cloumn) turns it into a column (vertical)
+column = np.array([10, 20]).reshape(2, 1)
+
+# NumPy automatically adds:
+# 10 to the first row
+# 20 to the second row
+result = matrix + column
+
+print(result)
+
+🔹 4. Matrix Broadcasting (2D + 2D)
+# Same shape → works
+
+import numpy as np
+
+a = np.array([[1, 2],
+              [3, 4]])
+
+b = np.array([[10, 20],
+              [30, 40]])
+
+print(a + b)
+
+
+# One dimension is 1 → still works
+a = np.array([[1, 2, 3],
+              [4, 5, 6]])
+
+b = np.array([[10, 20, 30]])
+
+print(a + b)
+
+🔹 5. Broadcasting with Different Shapes (Rule in Action)
+a = np.array([[1],
+              [2],
+              [3]])
+
+b = np.array([10, 20, 30])
+
+print(a + b)
+
+# Explanation:
+# => a shape → (3,1)
+# => b shape → (3,)
+# => NumPy expands them to (3,3)
+
+🔹 6. Common Broadcasting Errors
+Shape mismatch
+
+a = np.array([1, 2, 3])
+b = np.array([10, 20])
+
+# print(a + b)  Error
+
+# Why?
+# => Shapes (3,) and (2,) cannot match
+
+🔹 7. How to Fix Broadcasting Errors
+import numpy as np
+
+# Example matrix (2 rows, 2 columns)
+matrix = np.array([
+    [1, 2],
+    [3, 4]
+])
+
+#  This will cause a broadcasting error
+# Because shape (2,) does NOT clearly match rows or columns
+# b = np.array([10, 20])
+# result = matrix + b
+
+
+#  FIX 1: Using reshape()
+# reshape(1, 2) makes it a ROW vector
+# Shape becomes (1 row, 2 columns)
+b_row = np.array([10, 20]).reshape(1, 2)
+
+# NumPy adds [10, 20] to EACH row of the matrix
+result_row = matrix + b_row
+print("Using reshape (row):")
+print(result_row)
+
+
+#  FIX 2: Using newaxis
+# [:, np.newaxis] turns array into a COLUMN vector
+# Shape becomes (2 rows, 1 column)
+b_col = np.array([10, 20])[:, np.newaxis]
+
+# NumPy adds:
+# 10 to first row
+# 20 to second row
+result_col = matrix + b_col
+print(result_col)
+
+
+🔹 8. Broadcasting with Functions (ufuncs)
+
+arr = np.array([1, 4, 9])
+
+print(np.sqrt(arr + 10))
+
+# Explanation:
+# => 10 is broadcasted
+# => Then sqrt() applied to each element
+
+🔹 9. Real-World Use Cases
+
+Example 1: Increase salaries
+
+salary = np.array([30000, 40000, 50000])
+updated_salary = salary + 5000
+print(updated_salary)
+
+Example 2: Normalize marks
+marks = np.array([70, 80, 90])
+percentage = (marks / 100) * 100
+print(percentage)
+
+Example 3: Add bias in ML
+weights = np.array([[0.5, 0.2, 0.1],
+                    [0.4, 0.6, 0.3]])
+
+bias = np.array([0.1, 0.2, 0.3])
+
+output = weights + bias
+
+print(output)
+
+
+🔹 10. Broadcasting Visual Summary
+(3, 3) + (3,) → OK
+(3, 3) + (1, 3) → OK
+(3, 3) + (3, 1) → OK
+(3,)   + (2,)   → ❌
+
+Golden Rule (Remember This)
+# If shapes match from right to left → broadcasting works
+
+# Quick Cheat Sheet
+arr + 5               # scalar broadcasting
+matrix + vector       # row broadcasting
+matrix + column       # column broadcasting
+reshape()             # fix shape issues
+np.newaxis            # add dimension
+
+
+
+
+
+
+```
 
 
 
