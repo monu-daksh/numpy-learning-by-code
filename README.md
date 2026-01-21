@@ -4645,6 +4645,153 @@ print(arr)
 # Output: [4 6 5 7 3]
 # Simulates coin toss results
 ```
+📌 15. Linear Algebra in NumPy
+```python
+
+🔹 1. Dot Product
+# Multiply elements and add them
+# [a1, a2] · [b1, b2] = a1*b1 + a2*b2
+
+import numpy as np
+
+a = np.array([1, 2])
+b = np.array([3, 4])
+
+# Dot product of two vectors
+result = np.dot(a, b)
+
+print(result)
+
+🔹 2. Matrix Multiplication (NOT element-wise)
+# This is different from *
+
+# Uses rows of A and columns of B
+
+A = np.array([[1, 2],
+              [3, 4]])
+
+B = np.array([[5, 6],
+              [7, 8]])
+
+# Matrix multiplication using @
+result = A @ B
+
+print(result)
+# Output:
+# [[19 22]
+#  [43 50]]
+# Explanation:
+# Row1 × Col1 → (1*5 + 2*7) = 19
+# Row1 × Col2 → (1*6 + 2*8) = 22
+
+🔹 3. matmul() (Same as @)
+result = np.matmul(A, B)
+
+print(result)
+# Output is SAME as A @ B
+
+🔹 4. Determinant
+# What is Determinant?
+# => A single number that tells:
+# => If matrix is invertible
+# => Area scaling factor
+
+# A single number describing the matrix
+# If determinant = 0 → inverse not possible
+
+A = np.array([[1, 2],
+              [3, 4]])
+
+det = np.linalg.det(A)
+
+print(det)
+# Output: -2.0
+
+Note: If determinant = 0 → no inverse
+
+🔹 5. Inverse Matrix
+# Inverse cancels the original matrix
+# A × A⁻¹ = Identity matrix
+
+A_inv = np.linalg.inv(A)
+
+print(A_inv)
+# Output:
+# [[-2.   1. ]
+#  [ 1.5 -0.5]]
+
+# Verify correctness
+print(A @ A_inv)
+# Output (almost identity):
+# [[1. 0.]
+#  [0. 1.]]
+
+🔹 6. Identity Matrix
+# Like number 1 for matrices
+
+I = np.eye(3)
+
+print(I)
+# Output:
+# [[1. 0. 0.]
+#  [0. 1. 0.]
+#  [0. 0. 1.]]
+
+🔹 7. Eigenvalues & Eigenvectors
+# Special values where direction stays same after transformation
+
+# Eigenvector direction does NOT change
+# Eigenvalue tells how much it stretches
+
+A = np.array([[4, 2],
+              [1, 3]])
+
+values, vectors = np.linalg.eig(A)
+
+print("Eigenvalues:")
+print(values)
+
+print("Eigenvectors:")
+print(vectors)
+
+# Check eigen rule: A @ v = λ * v
+v = vectors[:, 0]       # first eigenvector
+lambda_val = values[0] # first eigenvalue
+
+print(A @ v)
+print(lambda_val * v)
+# Both outputs should match
+
+🔹 8. Solving Linear Equations
+
+# Example:
+# 2x + y = 5
+# x + 3y = 6
+
+A = np.array([[2, 1],
+              [1, 3]])
+
+B = np.array([5, 6])
+
+solution = np.linalg.solve(A, B)
+
+print(solution)
+# Output: [1.8 1.4]
+# solution[0] → x
+# solution[1] → y
+
+
+🔹 9. Element-wise vs Matrix multiplication (Important)
+
+print(A * B)
+# Element-wise multiplication
+# Each value multiplies directly
+
+print(A @ B)
+# Matrix multiplication
+# Rows × Columns
+
+```
 
 
 
