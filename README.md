@@ -4197,11 +4197,151 @@ matrix + vector       # row broadcasting
 matrix + column       # column broadcasting
 reshape()             # fix shape issues
 np.newaxis            # add dimension
+```
+📌 13. Aggregation & Statistical Functions
+```python
+What are Aggregation Functions?
+# => Take many values
+# => Return one summary value
+# => Example: total, average, minimum, maximum
+
+🔹 Sample Array (We’ll use this everywhere)
+
+import numpy as np
+arr = np.array([10, 20, 30, 40, 50])
+
+🔹 1. sum() → Total of all values
+
+total = np.sum(arr)
+print(total) // 150
+
+🔹 2. min() & max() → Smallest & largest value
+
+# min() finds the smallest number
+print(np.min(arr))   # Output: 10
+
+# max() finds the biggest number
+print(np.max(arr))   # Output: 50
+
+🔹 3. mean() → Average value
+# Formula: (sum of values) / (number of values)
+# (10 + 20 + 30 + 40 + 50) / 5 = 150 / 5 = 30
+
+print(np.mean(arr)) // 30.0
+
+🔹 4. median() → Middle value
+# Sorted array: [10, 20, 30, 40, 50]
+# Middle value is 30
+
+print(np.median(arr)) // 30.0
+
+🔹 5. std() → Standard Deviation
+# Measures how much numbers differ from the average
+# Bigger value = numbers are more spread out
+
+print(np.std(arr)) // 14.142135623730951
+
+🔹 6. var() → Variance
+# Variance = (standard deviation)²
+# Shows spread of data in squared form
+
+print(np.var(arr)) // 200.0
+
+🔹 7. argmin() & argmax() → Index of min/max
+arr2 = np.array([10, 5, 30, 2, 50])
+
+# Smallest number is 2 → its position (index) is 3
+print(np.argmin(arr2))
+# Output: 3
+
+# Largest number is 50 → its position (index) is 4
+print(np.argmax(arr2))
+# Output: 4
+
+🔹 8. Axis-Based Calculations (VERY IMPORTANT)
+ matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# Sum of ALL numbers
+# 1+2+3+4+5+6 = 21
+print(np.sum(matrix))
+# Output: 21
 
 
+# axis=0 → work column-wise
+# Column sums:
+# [1+4, 2+5, 3+6]
+print(np.sum(matrix, axis=0))
+# Output: [5 7 9]
 
 
+# axis=1 → work row-wise
+# Row sums:
+# [1+2+3, 4+5+6]
+print(np.sum(matrix, axis=1))
+# Output: [ 6 15 ]
 
+
+# Column-wise minimum
+# Compare values in each column
+print(np.min(matrix, axis=0))
+# Output: [1 2 3]
+
+
+# Row-wise maximum
+print(np.max(matrix, axis=1))
+# Output: [3 6]
+
+🔹 9. Mean with Axis
+ matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# Column averages:
+# [(1+4)/2, (2+5)/2, (3+6)/2]
+print(np.mean(matrix, axis=0))
+# Output: [2.5 3.5 4.5]
+
+# Row averages:
+# [(1+2+3)/3, (4+5+6)/3]
+print(np.mean(matrix, axis=1))
+# Output: [2. 5.]
+
+🔹 10. Cumulative Operations (Running Total)
+arr3 = np.array([10, 20, 30, 40])
+
+# cumsum() → running total
+# [10,
+#  10+20,
+#  10+20+30,
+#  10+20+30+40]
+print(np.cumsum(arr3))
+# Output: [ 10  30  60 100 ]
+
+
+# cumprod() → running multiplication
+# [10,
+#  10*20,
+#  10*20*30,
+#  10*20*30*40]
+print(np.cumprod(arr3))
+# Output: [    10    200   6000 240000 ]
+
+
+# Column-wise cumulative sum
+print(np.cumsum(matrix, axis=0))
+# Output:
+# [[1 2 3]
+#  [5 7 9]]
+
+# Row-wise cumulative sum
+print(np.cumsum(matrix, axis=1))
+# Output:
+# [[ 1  3  6]
+#  [ 4  9 15]]
 
 ```
 
