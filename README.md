@@ -4197,11 +4197,599 @@ matrix + vector       # row broadcasting
 matrix + column       # column broadcasting
 reshape()             # fix shape issues
 np.newaxis            # add dimension
+```
+📌 13. Aggregation & Statistical Functions
+```python
+What are Aggregation Functions?
+# => Take many values
+# => Return one summary value
+# => Example: total, average, minimum, maximum
+
+🔹 Sample Array (We’ll use this everywhere)
+
+import numpy as np
+arr = np.array([10, 20, 30, 40, 50])
+
+🔹 1. sum() → Total of all values
+
+total = np.sum(arr)
+print(total) // 150
+
+🔹 2. min() & max() → Smallest & largest value
+
+# min() finds the smallest number
+print(np.min(arr))   # Output: 10
+
+# max() finds the biggest number
+print(np.max(arr))   # Output: 50
+
+🔹 3. mean() → Average value
+# Formula: (sum of values) / (number of values)
+# (10 + 20 + 30 + 40 + 50) / 5 = 150 / 5 = 30
+
+print(np.mean(arr)) // 30.0
+
+🔹 4. median() → Middle value
+# Sorted array: [10, 20, 30, 40, 50]
+# Middle value is 30
+
+print(np.median(arr)) // 30.0
+
+🔹 5. std() → Standard Deviation
+# Measures how much numbers differ from the average
+# Bigger value = numbers are more spread out
+
+print(np.std(arr)) // 14.142135623730951
+
+🔹 6. var() → Variance
+# Variance = (standard deviation)²
+# Shows spread of data in squared form
+
+print(np.var(arr)) // 200.0
+
+🔹 7. argmin() & argmax() → Index of min/max
+arr2 = np.array([10, 5, 30, 2, 50])
+
+# Smallest number is 2 → its position (index) is 3
+print(np.argmin(arr2))
+# Output: 3
+
+# Largest number is 50 → its position (index) is 4
+print(np.argmax(arr2))
+# Output: 4
+
+🔹 8. Axis-Based Calculations (VERY IMPORTANT)
+ matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# Sum of ALL numbers
+# 1+2+3+4+5+6 = 21
+print(np.sum(matrix))
+# Output: 21
 
 
+# axis=0 → work column-wise
+# Column sums:
+# [1+4, 2+5, 3+6]
+print(np.sum(matrix, axis=0))
+# Output: [5 7 9]
 
 
+# axis=1 → work row-wise
+# Row sums:
+# [1+2+3, 4+5+6]
+print(np.sum(matrix, axis=1))
+# Output: [ 6 15 ]
 
+
+# Column-wise minimum
+# Compare values in each column
+print(np.min(matrix, axis=0))
+# Output: [1 2 3]
+
+
+# Row-wise maximum
+print(np.max(matrix, axis=1))
+# Output: [3 6]
+
+🔹 9. Mean with Axis
+ matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+# Column averages:
+# [(1+4)/2, (2+5)/2, (3+6)/2]
+print(np.mean(matrix, axis=0))
+# Output: [2.5 3.5 4.5]
+
+# Row averages:
+# [(1+2+3)/3, (4+5+6)/3]
+print(np.mean(matrix, axis=1))
+# Output: [2. 5.]
+
+🔹 10. Cumulative Operations (Running Total)
+arr3 = np.array([10, 20, 30, 40])
+
+# cumsum() → running total
+# [10,
+#  10+20,
+#  10+20+30,
+#  10+20+30+40]
+print(np.cumsum(arr3))
+# Output: [ 10  30  60 100 ]
+
+
+# cumprod() → running multiplication
+# [10,
+#  10*20,
+#  10*20*30,
+#  10*20*30*40]
+print(np.cumprod(arr3))
+# Output: [    10    200   6000 240000 ]
+
+
+# Column-wise cumulative sum
+print(np.cumsum(matrix, axis=0))
+# Output:
+# [[1 2 3]
+#  [5 7 9]]
+
+# Row-wise cumulative sum
+print(np.cumsum(matrix, axis=1))
+# Output:
+# [[ 1  3  6]
+#  [ 4  9 15]]
+
+```
+📌 14. Sorting & Searching
+```python
+
+import numpy as np
+arr = np.array([30, 10, 50, 20, 40])
+
+🔹 1. sort() → Sort values
+Basic sorting (ascending)
+
+# np.sort() returns a NEW sorted array (original stays same)
+sorted_arr = np.sort(arr)
+
+print(sorted_arr)
+# Output: [10 20 30 40 50]
+
+# Original array is NOT changed
+print(arr)
+# Output: [30 10 50 20 40]
+
+
+# Sort IN-PLACE (original array changes)
+arr.sort()
+print(arr)
+# Output: [10 20 30 40 50]
+
+🔹 2. argsort() → Sort indices
+arr = np.array([30, 10, 50, 20])
+
+# argsort returns indices that would sort the array
+indices = np.argsort(arr)
+
+print(indices)
+# Output: [1 3 0 2]
+
+# Explanation:
+# index 1 → value 10 (smallest)
+# index 3 → value 20
+# index 0 → value 30
+# index 2 → value 50
+
+# Use indices to get sorted array
+print(arr[indices])
+# Output: [10 20 30 50]
+
+🔹 3. Sorting Along Axis (2D Arrays)
+matrix = np.array([
+    [3, 1, 2],
+    [6, 4, 5]
+])
+
+# Sort each ROW (axis=1 → across rows)
+print(np.sort(matrix, axis=1))
+# Output:
+# [[1 2 3]
+#  [4 5 6]]
+
+# Sort each COLUMN (axis=0 → down columns)
+print(np.sort(matrix, axis=0))
+# Output:
+# [[3 1 2]
+#  [6 4 5]]
+
+matrix = np.array([
+    [3, 1, 2],
+    [6, 4, 5]
+])
+
+# Sort each ROW (axis=1 → across rows)
+print(np.sort(matrix, axis=1))
+# Output:
+# [[1 2 3]
+#  [4 5 6]]
+
+# Sort each COLUMN (axis=0 → down columns)
+print(np.sort(matrix, axis=0))
+# Output:
+# [[3 1 2]
+#  [6 4 5]]
+
+🔹 4. where() → Find values using condition
+arr = np.array([10, 20, 30, 40, 50])
+
+# Find indices where condition is TRUE
+result = np.where(arr > 30)
+
+print(result)
+# Output: (array([3, 4]),)
+
+# Get actual values using indices
+print(arr[result])
+# Output: [40 50]
+
+
+# Replace values using where()
+# If value > 30 → put 100
+# Else → keep original value
+new_arr = np.where(arr > 30, 100, arr)
+
+print(new_arr)
+# Output: [10 20 30 100 100]
+
+🔹 5. searchsorted() → Find insert position
+arr = np.array([10, 20, 30, 40])  # MUST be sorted
+
+# Find where 25 should be inserted
+index = np.searchsorted(arr, 25)
+
+print(index)
+# Output: 2
+# Means: 25 fits between 20 and 30
+
+# Insert multiple values
+values = [15, 35]
+print(np.searchsorted(arr, values))
+# Output: [1 3]
+
+🔹 6. Conditional Searching (Boolean Indexing)
+arr = np.array([10, 15, 20, 25, 30])
+
+# Select values greater than 20
+filtered = arr[arr > 20]
+
+print(filtered)
+# Output: [25 30]
+
+# Combine conditions
+# Select values > 10 AND < 30
+filtered = arr[(arr > 10) & (arr < 30)]
+
+print(filtered)
+# Output: [15 20 25]
+
+🔹 7. unique() → Get unique values
+arr = np.array([1, 2, 2, 3, 3, 4, 5])
+
+# Remove duplicates
+unique_values = np.unique(arr)
+
+print(unique_values)
+# Output: [1 2 3 4 5]
+
+# Get unique values with their counts
+values, counts = np.unique(arr, return_counts=True)
+
+print(values)
+# Output: [1 2 3 4 5]
+
+print(counts)
+# Output: [1 2 2 1 1]
+
+```
+📌 15. Random Module
+```python
+# What is the Random Module?
+# => Used to:
+# => Generate random numbers
+# => Simulate real-world randomness
+# => Create test data
+
+🔹 1. Random Numbers Basics
+import numpy as np
+print(np.random.rand())
+
+Note: Generate a random float between 0 and 1
+
+Meaning:
+Gives a random decimal number
+Range → 0 (inclusive) to 1 (exclusive)
+
+🔹 2. rand() → Random floats (uniform distribution)
+# 1D array with 5 random values
+arr = np.random.rand(5)
+print(arr)
+
+
+# Output: [0.95 0.73 0.60 0.15 0.15]
+# All values are between 0 and 1
+
+Explanation:
+Creates 5 random numbers
+All values are between 0 and 1
+
+# 2D array → 2 rows, 3 columns
+matrix = np.random.rand(2, 3)
+
+print(matrix)
+# Output:
+# [[0.15 0.05 0.86]
+#  [0.60 0.70 0.02]]
+
+
+🔹 3. randn() → Random numbers from normal distribution
+
+# Random numbers around mean = 0
+# Can be positive or negative
+arr = np.random.randn(5)
+
+print(arr)
+# Output: [-0.23  1.55 -0.98  0.45 -0.12]
+
+
+# 2D normal distribution
+matrix = np.random.randn(2, 3)
+
+print(matrix)
+# Output:
+# [[-0.46  0.38  1.12]
+#  [ 0.89 -1.23  0.15]]
+
+🔹 4. randint() → Random integers
+# Random integers from 1 to 9 (10 excluded)
+arr = np.random.randint(1, 10, size=5)
+
+print(arr)
+# Output: [3 7 1 9 4]
+
+
+# 2D random integers
+matrix = np.random.randint(0, 100, size=(2, 3))
+
+print(matrix)
+# Output:
+# [[45 12 89]
+#  [67 34 21]]
+
+🔹 5. choice() → Random selection
+arr = np.array([10, 20, 30, 40])
+
+# Pick ONE random value
+print(np.random.choice(arr))
+# Output: 30
+
+
+# Pick MULTIPLE random values
+print(np.random.choice(arr, size=3))
+# Output: [40 10 30]
+
+
+# Pick with PROBABILITY
+# Higher probability = higher chance
+print(np.random.choice(arr, size=3, p=[0.1, 0.2, 0.3, 0.4]))
+# Output example: [40 30 40]
+
+🔹 6. shuffle() → Shuffle array in-place
+arr = np.array([1, 2, 3, 4, 5])
+
+# Shuffles original array
+np.random.shuffle(arr)
+
+print(arr)
+# Output: [3 5 1 2 4]
+# Original order is changed
+
+🔹 7. permutation() → Shuffled copy
+arr = np.array([1, 2, 3, 4, 5])
+
+# Returns a NEW shuffled array
+new_arr = np.random.permutation(arr)
+
+print(new_arr)
+# Output: [2 5 1 4 3]
+
+print(arr)
+# Output: [1 2 3 4 5]
+# Original array stays same
+
+🔹 8. Setting Random Seed (VERY IMPORTANT)
+# Seed makes random numbers repeatable
+np.random.seed(42)
+
+print(np.random.rand(3))
+# Output: [0.37454012 0.95071431 0.73199394]
+
+# Run again → SAME output every time 
+
+🔹 9. Probability Distributions
+# NORMAL DISTRIBUTION
+# loc = mean, scale = standard deviation
+arr = np.random.normal(loc=0, scale=1, size=5)
+
+print(arr)
+# Output: [ 0.24 -0.91  1.46 -0.22  0.07]
+
+
+# UNIFORM DISTRIBUTION
+# Values between 10 and 20
+arr = np.random.uniform(low=10, high=20, size=5)
+
+print(arr)
+# Output: [13.2 18.6 11.4 19.8 15.3]
+
+
+# BINOMIAL DISTRIBUTION
+# n = number of trials
+# p = probability of success
+arr = np.random.binomial(n=10, p=0.5, size=5)
+
+print(arr)
+# Output: [4 6 5 7 3]
+# Simulates coin toss results
+```
+📌 15. Linear Algebra in NumPy
+```python
+
+🔹 1. Dot Product
+# Multiply elements and add them
+# [a1, a2] · [b1, b2] = a1*b1 + a2*b2
+
+import numpy as np
+
+a = np.array([1, 2])
+b = np.array([3, 4])
+
+# Dot product of two vectors
+result = np.dot(a, b)
+
+print(result)
+
+🔹 2. Matrix Multiplication (NOT element-wise)
+# This is different from *
+
+# Uses rows of A and columns of B
+
+A = np.array([[1, 2],
+              [3, 4]])
+
+B = np.array([[5, 6],
+              [7, 8]])
+
+# Matrix multiplication using @
+result = A @ B
+
+print(result)
+# Output:
+# [[19 22]
+#  [43 50]]
+# Explanation:
+# Row1 × Col1 → (1*5 + 2*7) = 19
+# Row1 × Col2 → (1*6 + 2*8) = 22
+
+🔹 3. matmul() (Same as @)
+result = np.matmul(A, B)
+
+print(result)
+# Output is SAME as A @ B
+
+🔹 4. Determinant
+# What is Determinant?
+# => A single number that tells:
+# => If matrix is invertible
+# => Area scaling factor
+
+# A single number describing the matrix
+# If determinant = 0 → inverse not possible
+
+A = np.array([[1, 2],
+              [3, 4]])
+
+det = np.linalg.det(A)
+
+print(det)
+# Output: -2.0
+
+Note: If determinant = 0 → no inverse
+
+🔹 5. Inverse Matrix
+# Inverse cancels the original matrix
+# A × A⁻¹ = Identity matrix
+
+A_inv = np.linalg.inv(A)
+
+print(A_inv)
+# Output:
+# [[-2.   1. ]
+#  [ 1.5 -0.5]]
+
+# Verify correctness
+print(A @ A_inv)
+# Output (almost identity):
+# [[1. 0.]
+#  [0. 1.]]
+
+🔹 6. Identity Matrix
+# Like number 1 for matrices
+
+I = np.eye(3)
+
+print(I)
+# Output:
+# [[1. 0. 0.]
+#  [0. 1. 0.]
+#  [0. 0. 1.]]
+
+🔹 7. Eigenvalues & Eigenvectors
+# Special values where direction stays same after transformation
+
+# Eigenvector direction does NOT change
+# Eigenvalue tells how much it stretches
+
+A = np.array([[4, 2],
+              [1, 3]])
+
+values, vectors = np.linalg.eig(A)
+
+print("Eigenvalues:")
+print(values)
+
+print("Eigenvectors:")
+print(vectors)
+
+# Check eigen rule: A @ v = λ * v
+v = vectors[:, 0]       # first eigenvector
+lambda_val = values[0] # first eigenvalue
+
+print(A @ v)
+print(lambda_val * v)
+# Both outputs should match
+
+🔹 8. Solving Linear Equations
+
+# Example:
+# 2x + y = 5
+# x + 3y = 6
+
+A = np.array([[2, 1],
+              [1, 3]])
+
+B = np.array([5, 6])
+
+solution = np.linalg.solve(A, B)
+
+print(solution)
+# Output: [1.8 1.4]
+# solution[0] → x
+# solution[1] → y
+
+
+🔹 9. Element-wise vs Matrix multiplication (Important)
+
+print(A * B)
+# Element-wise multiplication
+# Each value multiplies directly
+
+print(A @ B)
+# Matrix multiplication
+# Rows × Columns
 
 ```
 
