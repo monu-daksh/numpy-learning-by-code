@@ -1,5 +1,4 @@
 # NumPy Learning by Code 🧠🐍
-
 A **complete NumPy learning repository** designed to teach NumPy **from zero to advanced level** using a **step-by-step, topic-wise, code-first approach**.
 
 This repository follows a **proper learning sequence**, so each concept builds naturally on the previous one.
