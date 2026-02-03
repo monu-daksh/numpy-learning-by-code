@@ -16,9 +16,7 @@ NumPy (Numerical Python) is the core library for:
 It provides **fast, memory-efficient, multi-dimensional arrays** and powerful mathematical operations.
 
 ---
-
 ## 🧭 Complete NumPy Learning Roadmap (In Sequence)
-
 ---
 
 ## 1️⃣ NumPy Basics & Setup
