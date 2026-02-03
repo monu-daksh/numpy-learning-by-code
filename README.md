@@ -1,9 +1,7 @@
 # NumPy Learning by Code 🧠🐍
-
 A **complete NumPy learning repository** designed to teach NumPy **from zero to advanced level** using a **step-by-step, topic-wise, code-first approach**.
 
 This repository follows a **proper learning sequence**, so each concept builds naturally on the previous one.
-
 ---
 
 ## 📌 What is NumPy?
@@ -18,10 +16,7 @@ NumPy (Numerical Python) is the core library for:
 It provides **fast, memory-efficient, multi-dimensional arrays** and powerful mathematical operations.
 
 ---
-
 ## 🧭 Complete NumPy Learning Roadmap (In Sequence)
-
----
 
 ## 1️⃣ NumPy Basics & Setup
 - What is NumPy?
@@ -424,7 +419,6 @@ import numpy as np
 
 arr = np.array([1, 2, 3])
 print(arr)
-
 ```
 📌 2. NumPy Arrays Fundamentals (Deep & Simple Guide)
 ```python
